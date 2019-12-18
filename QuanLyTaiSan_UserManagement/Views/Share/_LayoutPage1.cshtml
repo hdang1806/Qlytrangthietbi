@@ -1,15 +1,18 @@
 ﻿<!DOCTYPE html>
+@using QuanLyTaiSan_UserManagement.Common;
 @using QuanLyTaiSan_UserManagement.Models
 @{
     QuanLyTaiSanCtyEntities data = new QuanLyTaiSanCtyEntities();
     ViewData["DeviceType"] = data.DeviceTypes.ToList();
     ViewBag.CountDeviceType = data.SearchDevice(null, null, null, null, null).Where(x => x.Status != 2).Count();
     ViewBag.CountDeviceType1 = data.SearchDevice(null, null, null, null, null).Where(x => x.Status == 2).Count();
-    ViewBag.CountPr = data.SearchProject(null, null, null).Count();
-    ViewBag.CountRoom = data.SearchProject(null, 4, null).Count();
+    ViewBag.CountPr = data.SearchProject(null, null,0, null).Count();
+    ViewBag.CountRoom = data.SearchProject(null, null,1, null).Count();
     ViewBag.CountRepairDetails = data.SearchRepairDetails(null, null, null, null).Count();
     ViewBag.CountRequestDevice = data.SearchRequestDeviceNew(null, null).Count();
     ViewBag.CountScheduleTest = data.SearchScheduleTest(null, null).Count();
+    //var session = (UserLoginSec)HttpContext.Current.Session[CommonConstants.USER_SESSION];
+    //ViewBag.SecName = data.UserLogins.Where(x => x.UserName ==  session.UserName ).Select(x => x.FullName).FirstOrDefault();
 }
 <html>
 <head>
@@ -87,24 +90,18 @@
                             @*}*@
                         </ul>
                     </li>
-                    <li class="sub-menu">
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("Project")))
-                            {*@
+                    @*<li class="sub-menu">
                         <a href="javascript:;" class="Project">
                             <i class="icon-briefcase"></i>
                             <span>Dự án</span>
                         </a>
-                        @*}*@
                         <ul class="sub">
                             <li class="ProjectTable">
                                 <a href="@Url.Action("Project", "Project")">Danh sách dự án (@ViewBag.CountPr) </a>
                             </li>
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddProject")))
-                                {*@
                             <li class="AddProject">@Html.ActionLink("Thêm mới dự án", "AddProject", "Project")</li>
-                            @*}*@
                         </ul>
-                    </li>
+                    </li>*@
                     <li class="sub-menu">
                         @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("RepairDetails")))
                             {*@
@@ -194,33 +191,35 @@
                             <li class="StatisticalDevice">@Html.ActionLink("Thống kê thiết bị", "StatisticalDevice", "Device")</li>@*}*@
                             @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("StatisticProject")))
                                 {*@
-                            <li class="StatisticProject">@Html.ActionLink("Thống kê dự án", "StatisticProject", "Project")</li>@*}*@
+                            <li class="StatisticProject">@Html.ActionLink("Thống kê phòng ban", "StatisticProject", "Project")</li>@*}*@
                         </ul>
                     </li>
                     @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Authentication") && k.ActionName.Equals("User")))
                         {*@
                     <li class="sub-menu">
-                        <a href="javascript:;" class="">
+                        <a href="javascript:;" class="RoleUser">
                             <i class="icon-user"></i>
                             <span>Quản lý người dùng</span>
                         </a>
                         <ul class="sub">
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("User") && k.ActionName.Equals("Index")))
+                            @*@if (Session["CommonConstants.USER_SESSION"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("User") && k.ActionName.Equals("Index")))
                                 {*@
-                            <li>@Html.ActionLink("Danh sách người dùng", "Index", "User")</li>@*}*@
+                            <li>@Html.ActionLink("Danh sách người dùng", "UserIndex", "UserRole")</li> 
+                            @*}*@
                             @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Authentication") && k.ActionName.Equals("Role")))
                                 {*@
-                            <li class="Supplier">@Html.ActionLink("Phân quyền - Tính năng ", "Role", "Authentication")</li>@*}*@
+                            <li class="RoleForUserGroup">@Html.ActionLink("Phân quyền - Tính năng ", "RoleIndex", "Role")</li>@*}*@
                         </ul>
                     </li>@*}*@
                     <li class="sub-menu">
                         <a href="javascript:;" class="">
                             <i class="icon-meh"></i>
-                            <span>@Html.Raw(System.Web.HttpContext.Current.User.Identity.Name)</span>
+                            @*<span> (@ViewBag.SecName) </span>*@
+                           
                         </a>
                         <ul class="sub">
-                            <li class="Supplier">@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "Account")</li>
-                            @if (Request.IsAuthenticated)
+                            @*<li class="Supplier">@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "Account")</li>*@
+                            @if (1==1)
                             {
                                 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                 {

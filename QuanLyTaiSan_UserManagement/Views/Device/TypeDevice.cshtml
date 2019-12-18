@@ -136,7 +136,7 @@
                                             <td style="width:15%">@Html.Raw(item.Configuration)</td>
                                             <td style="width:10%">@item.ProjectSymbol</td>
                                             <td style="width:8%">
-                                                @Html.Raw(item.Status.GetEnumDescription(typeof(eStatus.DeviceStatus)))<br />
+                                                @Html.Raw(Convert.ToInt32(item.Status).GetEnumDescription(typeof(eStatus.DeviceStatus)))<br />
                                                 @Html.Raw(Convert.ToInt32(item.StatusRepair).GetEnumDescription(typeof(eStatus.RepairStatus)))
                                             </td>
                                             <td class="center" style="width:3%">

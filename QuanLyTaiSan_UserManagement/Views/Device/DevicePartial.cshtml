@@ -8,9 +8,9 @@
             </div>
             <div class="modal-body">
                 Bạn có muốn xóa thiết bị đã chọn?
-                <div style="text-align:center;display:none" id="loaderDiv">
-                    <img src="~/Content/img/Spinner-1s-200px.gif" width="150" />
-                </div>
+                @*<div style="text-align:center;display:none" id="loaderDiv">
+                        <img src="~/Content/img/Spinner-1s-200px.gif" width="150" />
+                    </div>*@
             </div>
             <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="button">Hủy</button>
@@ -60,7 +60,7 @@
     </div>
 </div>
 <script>
-    var ConfirmDelete=function(Id,Status){
+    var ConfirmDelete = function (Id, Status) {
         $("#hiddenId").val(Id);
         $("#Statushidden").val(Status);
         $("#myModaldelete").modal('show')
@@ -72,7 +72,7 @@
             $("#myModaldelete").modal("hide");
         }
         else {
-            $("#loaderDiv").show();
+            //  $("#loaderDiv").show();
             var dvId = $("#hiddenId").val();
             $.ajax({
                 type: "POST",
@@ -80,14 +80,14 @@
                 data: { Id: dvId },
                 success: function (result) {
                     if (result) {
-                        $("#loaderDiv").hide();
+                        //  $("#loaderDiv").hide();
                         $("#myModaldelete").modal("hide");
                         location.reload();
                     } else {
 
-                        $("#loaderDiv").hide();
+                        //  $("#loaderDiv").hide();
                         $("#myModaldelete").modal("hide");
-                        alert("Xóa thiết bị lỗi");
+                        alert("Xóa thiết bị lỗi. Thiết bị là thiết bị con nằm trong thiết bị khác");
                     }
                 }
             })
@@ -111,15 +111,18 @@
         //    status += $(this).data("status")
         //});
         / we join the array separated by the comma /
+      
+
+
         if (chkArray.length > 0) {
             if (status != 0) {
-                alert("Có những thiết bị đã có sẵn trong dự án hoạc không thể gán!");
+                alert("Có những thiết bị đã có sẵn trong dự án hoặc không thể gán!");
             }
             else {
                 $("#hiddenId1").val(chkArray);
                 $("#myModalg1").modal('show');
                 $('#btnContinueAdd').click(function () {
-                    $("#loaderDiv").show();
+                    //  $("#loaderDiv").show();
                     $(".checkon:checked").each(function () {
                         var check = $(this).val();
                         $("#hiddenprid").val(check);
@@ -135,13 +138,13 @@
                         },
                         success: function (result) {
                             if (result) {
-                                $("#loaderDiv").hide();
+                                //   $("#loaderDiv").hide();
                                 $("#myModalg1").modal("hide");
                                 location.reload();
                             } else {
-                                $("#loaderDiv").hide();
+                                // $("#loaderDiv").hide();
                                 $("#myModalg1").modal("hide");
-                                alert("Thêm thiết bị lỗi");
+                                alert("Thêm thiết bị lỗi. Có thiết bị con nằm trong thiết bị cha");
                             }
                         }
                     })
@@ -150,4 +153,3 @@
         }
     }
 </script>
-

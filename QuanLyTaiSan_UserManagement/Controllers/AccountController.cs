@@ -18,7 +18,7 @@ using QuanLyTaiSan_UserManagement.Models;
 
 namespace QuanLyTaiSan_UserManagement.Controllers
 {
-   [Authorize]
+   //[Authorize]
     
     public class AccountController : Controller
     {
@@ -443,7 +443,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             Session.Abandon();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login_New", "Account_App_New");
         }
 
         //
@@ -472,7 +472,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             }
 
             base.Dispose(disposing);
-        }
+         }
 
         #region Helpers
         // Used for XSRF protection when adding external logins

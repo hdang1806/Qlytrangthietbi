@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <!--Containt-->
                 <div class="form-body">
-                    <label> Bạn chắc chắn muốn thêm thiết bị vào dự án</label>
+                    <label> Bạn chắc chắn muốn thêm thiết bị vào @Model.ProjectName</label>
                 </div>
                 <div class="form-group m-bot15 clearfix">
                     <input type="hidden" value="@Model.Id" name="ProjectId" />
@@ -54,7 +54,7 @@
         $("#loaderDiv").show();
         $.ajax({
             type: "POST",
-            url: "/Project/AddDeviceInProject1",
+            url: "/Department/AddDeviceInDepartment1",
             data: {
                 Idpr: prId,
                 Iddv: dvId,
@@ -65,7 +65,7 @@
                     $("#loaderDiv").hide();
                     $("#myModal1").modal("hide");
                     $("#row_" + dvId).remove();
-                    window.location = '@Url.Action("AddDeviceInProject", "Project", new {DeviceType = 0 })';
+                    window.location = '@Url.Action("AddDeviceInDepartment", "Department", new {DeviceType = 0 })';
                   
                 }
                 else {
@@ -87,7 +87,7 @@
         $("#loaderDiv").show();
         $.ajax({
             type: "POST",
-            url: "/Project/AddDeviceInProject1",
+            url: "/Department/AddDeviceInDepartment1",
             data: {
                 Idpr: prId,
                 Iddv: dvId,
@@ -99,7 +99,7 @@
                     $("#myModal1").modal("hide");
                     $("#row_" + dvId).remove();
                 
-                    window.location = '@Url.Action("EditProject", "Project", new { id = Model.Id })';
+                    window.location = '@Url.Action("EditDepartment", "Department", new { id = Model.Id })';
                 }
                 else {
                     $("#loaderDiv").hide();

@@ -23,7 +23,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             ListCount.Add("Deviceliquidation", Deviceliquidation);
             int DeviceType = data.DeviceTypes.Count();
             ListCount.Add("DeviceType", DeviceType);
-            int Project = data.ProjectDKCs.Where(x => x.IsDeleted == false).Count();
+            int Project = data.ProjectDKCs.Where(x => x.IsDeleted == false & x.TypeProject == 1).Count();
             ListCount.Add("Project", Project);
             int User = data.Users.Where(x=>x.IsDeleted==false).Count();
             ListCount.Add("User", User);

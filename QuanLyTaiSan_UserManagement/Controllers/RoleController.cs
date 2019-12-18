@@ -7,30 +7,71 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using QuanLyTaiSan_UserManagement.Attribute;
 using QuanLyTaiSan_UserManagement.Models;
+using QuanLyTaiSan_UserManagement.Common;
 
 namespace QuanLyTaiSan_UserManagement.Controllers
 {
-//    [Authorize]
-  //  [AuthorizationHandler]
+    //    [Authorize]
+    //  [AuthorizationHandler]
     public class RoleController : Controller
     {
+        QuanLyTaiSanCtyEntities data = new QuanLyTaiSanCtyEntities();
         // GET: Role
-        public ActionResult Index()
+        public ActionResult RoleIndex()
         {
+            ViewData["ListUserGroup"] = data.UserGroups.ToList();
+            ViewData["ListRoleForGroup"] = data.Roles.ToList();
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(FormCollection collection)
+        [ValidateInput(false)]
+        public ActionResult AddUserGroup(string ID, string Name)
         {
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var dao = new UserDao();
 
-            if (roleManager.RoleExists(collection["RoleName"]) == false)
-            {
-                Guid guid = Guid.NewGuid();
-                roleManager.Create(new IdentityRole() { Id = guid.ToString(), Name = collection["RoleName"] });
-            }
-            return View();
+            bool result = dao.AddUserGroup(ID.Trim(), Name.Trim());
+
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult ConfirmDelete(string ID)
+        {
+            var dao = new UserDao();
+
+            bool result = dao.DeleteUserGroup(ID.Trim());
+
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult GetRoleForeGroup(string GroupID)
+        {
+            //  var dao = new UserDao();
+            var lstRole = data.Credentials.Where(x => x.UserGroupID == GroupID).Select(x => x.RoleID).ToList();
+            // bool result = dao.DeleteUserGroup(RoleID.Trim());
+            // bool Result = true; 
+            var result = new { lstRole };
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult AddRoleForGroup(string RoleId, string GroupId)
+        {
+            data.DeleteAllRole(GroupId); 
+            var dao = new UserDao();
+            bool result = dao.AddRoleForGroup(RoleId, GroupId.Trim());
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

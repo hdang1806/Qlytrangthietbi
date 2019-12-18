@@ -26,7 +26,7 @@
                         {
                             <div class="pull-left row col-md-12 nopadding">
                                 <div class="col-md-2 TcssMarg">
-                                    <select class="form-control input-sm m-bot15 myctr" name="TypeOfDevice" id="TypeOfDevice">
+                                    <select class="searchType form-control input-sm m-bot15 myctr " name="TypeOfDevice" id="TypeOfDevice">
                                         <option value="0">Chọn loại thiết bị</option>
                                         @foreach (var item in ViewData["TypeOfDevice"] as IList<DeviceType>)
                                         {
@@ -50,8 +50,8 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2 TcssMarg">
-                                    <select class="form-control input-sm m-bot15 myctr" name="ProjectDKC" id="ProjectDKC">
-                                        <option value="0">Chọn dự án</option>
+                                    <select class="form-control input-sm m-bot15 myctr seachRoom" name="ProjectDKC" id="ProjectDKC">
+                                        <option value="0">Chọn phòng ban</option>
                                         @foreach (var item in ViewData["ProjectDKC"] as IList<ProjectDKC>)
                                         {
                                             <option value="@item.Id" @( ViewBag.poject == @item.Id ? "selected" : "")>@item.ProjectName</option>
@@ -111,7 +111,7 @@
                                     <th style="width:10%">Người dùng</th>
                                     <th style="width:12%">Nhà Cung Cấp</th>
                                     <th style="width:13%">Cấu Hình</th>
-                                    <th style="width:12%">Mã DA || Phòng</th>
+                                    <th style="width:12%">Mã Phòng</th>
                                     <th style="width:8%">Trạng Thái</th>
                                     <th style="width:3%">Xem</th>
                                     <th style="width:3%">Xóa</th>
@@ -131,9 +131,9 @@
                                             <td style="width:10%">@item.FullName</td>
                                             <td style="width:12%">@item.Name</td>
                                             <td style="width:13%">@Html.Raw(item.Configuration)</td>
-                                            <td style="width:12%">@item.ProjectSymbol</td>
-                                            <td style="width:8%">
-                                                @Html.Raw(item.Status.GetEnumDescription(typeof(eStatus.DeviceStatus)))<br />
+                                            <td style="width:10%">@item.ProjectSymbol</td>
+                                            <td style="width:10%">
+                                                @Html.Raw(Convert.ToInt32(item.Status).GetEnumDescription(typeof(eStatus.DeviceStatus)))<br />
                                                 @Html.Raw(Convert.ToInt32(item.StatusRepair).GetEnumDescription(typeof(eStatus.RepairStatus)))
                                             </td>
                                             <td class="center" style="width:3%">
@@ -142,7 +142,7 @@
                                             <td class="center" style="width:3%">
                                                 @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("DeleteDevice")))
                                                     {*@
-                                                <a class="icon-trash" id="deleteItem" onclick="ConfirmDelete(@item.Id,@item.Status)"></a>
+                                                <a class="icon-trash" id="deleteItem" href="#" onclick="ConfirmDelete(@item.Id,@item.Status)"></a>
                                                 @*}*@
                                             </td>
                                         </tr>
@@ -183,7 +183,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">DELETE</h4>
+                            <h4 class="modal-title">Xác nhận</h4>
                         </div>
                         <div class="modal-body">
                             Bạn có muốn thanh lý thiết bị đã chọn?
@@ -240,10 +240,14 @@
 </div>
 <!-- page end-->
 <script src="~/Scripts/DeviceScripts.js"></script>
+<link href="~/Content/css/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
 <script>
     $('.Device').addClass('active');
     $('.Devicetable').addClass('active');
-
+    $('.seachRoom').select2();
+    $('.searchType').select2();
+    
     // Export to exel 
     function fnExcelReport() {
         var TypeOfDevice = $('#TypeOfDevice').val();

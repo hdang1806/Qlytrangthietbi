@@ -1,4 +1,7 @@
-﻿var Confim1 = function () {
+﻿
+// SCRIPT FOR PAGE : DEVICE
+// Thanh lý thiết bị 
+var Confim1 = function () {
     var chkArray = [];
     var status = 0;
     / look for all checkboes that have a class 'chk' attached to it and check if it was checked /
@@ -17,18 +20,7 @@
             }
         }
     });
-    //$(".check:checked").each(function () {
-    //    chkArray.push($(this).val());
-    //    if ($(this).data("status") == 1) {
-    //        status = 1;
-    //    }
-    //    if ($(this).data("status") == 2) {
-    //        status = 2;
-    //    }
-    //    if ($(this).data("status") == 3) {
-    //        status = 3;
-    //    }
-    //});
+
     / we join the array separated by the comma /
     var selected;
     selected = chkArray.join(',');
@@ -62,7 +54,7 @@
 
                             $("#loaderDiv").hide();
                             $("#Liquidation").modal("hide");
-                            alert("Thanh lý thiết bị lỗi");
+                            alert("Thanh lý thiết bị lỗi.Tồn tại thiết bị con nằm trong thiết bị cha");
                         }
                     }
                 })
@@ -70,6 +62,8 @@
         }
     }
 }
+
+//Trả thiết bị 
 var ConfimReturn = function () {
     var chkArray = [];
     / look for all checkboes that have a class 'chk' attached to it and check if it was checked /
@@ -79,9 +73,6 @@ var ConfimReturn = function () {
             chkArray.push($(this).val());
         }
     });
-    //$(".check:checked").each(function () {
-    //    chkArray.push($(this).val());
-    //});
     / we join the array separated by the comma /
     if (chkArray.length > 0) {
         $("#hiddenId1").val(chkArray);
@@ -102,13 +93,15 @@ var ConfimReturn = function () {
 
                         $("#loaderDiv").hide();
                         $("#Returnproject").modal("hide");
-                        alert("Trả thiết bị lỗi");
+                        alert("Trả thiết bị lỗi. Tồn tại thiết bị con nằm trong thết bị cha");
                     }
                 }
             })
         })
     }
 }
+
+//Xóa thiết bị 
 var ConfirmDelete1 = function () {
     var chkArray = [];
     var status = 0;
@@ -152,7 +145,7 @@ var ConfirmDelete1 = function () {
 
                             $("#loaderDiv").hide();
                             $("#myModaldelete1").modal("hide");
-                            alert("Xóa thiết bị lỗi");
+                            alert("Xóa thiết bị lỗi. Tồn tại thiết bị con nằm trong thiết bị khác");
                         }
                     }
                 })
@@ -160,6 +153,8 @@ var ConfirmDelete1 = function () {
         }
     }
 }
+
+// Script Chạy trc khi load HTML
 $(document).ready(function () {
     $("#myInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();
@@ -247,6 +242,8 @@ $(document).ready(function () {
 //        }
 //    })
 //}
+
+// In Table 
 function printDiv() {
     var divToPrint = document.getElementById('example');
     newWin = window.open("");
@@ -254,6 +251,8 @@ function printDiv() {
     newWin.print();
     newWin.close();
 }
+
+// Cấu hình Tạo Barcode (In mã vạch cho thiết bị )
 $('#ConfimprintImg').click(function () {
     var chkArray = []; var IdArray = [];
     / look for all checkboes that have a class 'chk' attached to it and check if it was checked /

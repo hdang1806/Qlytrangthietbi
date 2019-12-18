@@ -4,12 +4,12 @@
 @using QuanLyTaiSan_UserManagement.Helper
 @{
 
-    ViewBag.Title = "Thêm thiết bị vào dự án " + Model.ProjectSymbol;
+    ViewBag.Title = "Thêm thiết bị vào Phòng ban " + Model.ProjectSymbol;
     Layout = "~/Views/Share/_LayoutPage1.cshtml";
 }
 <section class="panel">
     <header class="panel-heading m-bot15 " style="padding-bottom:20px">
-        <a class="edit panel-default" style="margin-right:10px" href="@Url.Action("EditProject", "Project", new { id = Model.Id })">
+        <a class="edit panel-default" style="margin-right:10px" href="@Url.Action("EditDepartment", "Department", new { id = Model.Id })">
             <span class="icon-border">
                 <i class="icon-arrow-left"> </i>
             </span>
@@ -22,10 +22,10 @@
         <input class="form-control input-sm myctr " size="100" name="DeviceBarcode" id="DeviceBarcode" onchange="ClickScanner()" autocomplete="off">
     </div>
     <div class="col-md-9 ">
-        @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceProjectAll")))
-            {
+        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceProjectAll")))
+            {*@
             <button type="button" class="btn btn-primary btn-large tcssLeft" href="javascript:void(0)" onclick="AddDeviceInProjectAll()"> Thêm </button>
-        }
+        @*}*@
     </div>
     <section class="panel-body">
         <div class="tcssMarT m-bot15">
@@ -51,14 +51,14 @@
     </section>
     <div class="col-md-12 form-group ">
         <div class="FontHeader">
-            @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceProjectAll")))
-            {
+            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceProjectAll")))
+            {*@
                 <button type="button" class="btn btn-primary btn-large" href="javascript:void(0)" onclick="AddDeviceInProjectAll()"> Thêm </button>
-            }
-            <a class="btn btn-white" href="@Url.Action("EditProject","Project",new {id = Model.Id })">Hủy</a>
+            @*}*@
+            <a class="btn btn-white" href="@Url.Action("EditDepartment","Department",new {id = Model.Id })">Hủy</a>
         </div>
     </div>
-    @Html.Partial("AddDeviceInProjectAllPartial")
+    @Html.Partial("AddDeviceInDepartmentAllPartial")
 </section>
 <!--The end table-->
 <script>
@@ -77,7 +77,7 @@
         if (Code == 1) { alert('Thiết Bị Đã Được Quét!'); $('#DeviceBarcode').val('') }
         else
             $.ajax({
-                url: '/Project/GetDeviceInProjectMachine',
+                url: '/Department/GetDeviceInDepartmentMachine',
                 data: {
                     dvc: Code
                 },
@@ -88,7 +88,7 @@
                     if (data != null) {
 
                         if (data.Status == 1) {
-                            alert("Thiết bị đang trong dự án")
+                            alert("Thiết bị đang trong dự án || Phòng ")
                             $('#DeviceBarcode').val('')
                         }
                         if (data.Status == 2) {

@@ -22,6 +22,8 @@ namespace QuanLyTaiSan_UserManagement.Models
             this.RepairDetails = new HashSet<RepairDetail>();
             this.ScheduleTests = new HashSet<ScheduleTest>();
             this.UsageDevices = new HashSet<UsageDevice>();
+            this.DeviceDevices = new HashSet<DeviceDevice>();
+            this.DeviceDevices1 = new HashSet<DeviceDevice>();
         }
     
         public int Id { get; set; }
@@ -57,5 +59,9 @@ namespace QuanLyTaiSan_UserManagement.Models
         public virtual ICollection<ScheduleTest> ScheduleTests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsageDevice> UsageDevices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeviceDevice> DeviceDevices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeviceDevice> DeviceDevices1 { get; set; }
     }
 }

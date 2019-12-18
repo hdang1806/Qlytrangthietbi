@@ -38,6 +38,7 @@ namespace QuanLyTaiSan_UserManagement.Models
         public Nullable<int> RoleId { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public string GroupID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DestructivelDevice> DestructivelDevices { get; set; }
@@ -49,7 +50,6 @@ namespace QuanLyTaiSan_UserManagement.Models
         public virtual ICollection<RepairDetail> RepairDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestDevice> RequestDevices { get; set; }
-        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ScheduleTest> ScheduleTests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

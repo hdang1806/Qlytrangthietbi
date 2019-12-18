@@ -13,12 +13,12 @@
                 <header class="panel-heading mypanel">
                     @Model.UserName
                     <div class="pull-right">
-                        @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Employees") && k.ActionName.Equals("DetailUser1")))
-                        {
-                            <button type="submit" class="btn btn-primary"> Lưu </button>}
-                        @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Employees") && k.ActionName.Equals("DeleteUser")))
-                        {
-                            <button type="button" class="btn btn-danger" onclick="ConfirmDelete(@Model.Id)">Xóa</button>}
+                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Employees") && k.ActionName.Equals("DetailUser1")))
+                        {*@
+                            <button type="submit" class="btn btn-primary"> Lưu </button>@*}*@
+                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Employees") && k.ActionName.Equals("DeleteUser")))
+                        {*@
+                            <button type="button" class="btn btn-danger" onclick="ConfirmDelete(@Model.Id)">Xóa</button>@*}*@
                     </div>
                 </header>
                 <div class="panel-body">

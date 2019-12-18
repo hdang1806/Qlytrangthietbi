@@ -9,11 +9,13 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Web.UI;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace QuanLyTaiSan_UserManagement.Controllers
 {
     // [Authorize]
     // [AuthorizationHandler]
+    [HasCredential(RoleID = "")]
     public class ProjectController : Controller
     {
         QuanLyTaiSanCtyEntities Ql = new QuanLyTaiSanCtyEntities();
@@ -23,9 +25,9 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         //  [AuthorizationViewHandler]
         public ActionResult Project()
         {
-            ViewBag.ProjectNb = Ql.SearchProject(null, null, null).Count();
+            ViewBag.ProjectNb = Ql.SearchProject(null, null, 0,null).Count();
             ViewData["User"] = Ql.Users.ToList();
-            var lstProject = Ql.SearchProject(null, null, null).ToList();
+            var lstProject = Ql.SearchProject(null, null, 0,null).ToList();
             return View(lstProject);
         }
         [HttpPost]
@@ -35,12 +37,12 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             String ProjectSymbol = colection["ProjectSymbol"].Trim();
             int? Status = colection["Status"].Equals("0") ? (int?)null : Convert.ToInt32(colection["Status"]);
             int? ManagerProject = colection["ManagerProject"].Equals("0") ? (int?)null : Convert.ToInt32(colection["ManagerProject"]);
-            var lstProject = Ql.SearchProject(ManagerProject, Status, ProjectSymbol).ToList();
+            var lstProject = Ql.SearchProject(ManagerProject, Status,0, ProjectSymbol).ToList();
             var ViewProject = lstProject;
             ViewBag.Status = Status;
             ViewBag.ManagerProject = ManagerProject;
             ViewBag.ProjectSymbol = ProjectSymbol;
-            ViewBag.ProjectNb = Ql.SearchProject(ManagerProject, Status, ProjectSymbol).Count();
+            ViewBag.ProjectNb = Ql.SearchProject(ManagerProject, Status,0, ProjectSymbol).Count();
             return View("Project", ViewProject);
         }
         //  [AuthorizationViewHandler]
@@ -246,17 +248,75 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         {
             return View();
         }
+
+        public static string HtmlToPlainText(string html)
+        {
+            const string tagWhiteSpace = @"(>|$)(\W|\n|\r)+<";//matches one or more (white space or line breaks) between '>' and '<'
+            const string stripFormatting = @"<[^>]*(>|$)";//match any character between '<' and '>', even when end tag is missing
+            const string lineBreak = @"<(br|BR)\s{0,1}\/{0,1}>";//matches: <br>,<br/>,<br />,<BR>,<BR/>,<BR />
+            var lineBreakRegex = new Regex(lineBreak, RegexOptions.Multiline);
+            var stripFormattingRegex = new Regex(stripFormatting, RegexOptions.Multiline);
+            var tagWhiteSpaceRegex = new Regex(tagWhiteSpace, RegexOptions.Multiline);
+
+            var text = html;
+            //Decode html specific characters
+            text = System.Net.WebUtility.HtmlDecode(text);
+            //Remove tag whitespace/line breaks
+            text = tagWhiteSpaceRegex.Replace(text, "><");
+            //Replace <br /> with line breaks
+            text = lineBreakRegex.Replace(text, Environment.NewLine);
+            //Strip formatting
+            text = stripFormattingRegex.Replace(text, string.Empty);
+
+            return text;
+        }
+
+        public class NewConfig
+        {
+            public string DeviceCode { get; set; }
+            public string DeviceName { get; set; }
+            public string TypeName { get; set; }
+            public string Configuration { get; set; }
+            public string Notes { get; set; }
+            public string Status { get; set; }
+            public string DateOfDelivery { get; set; }
+        }
+       public string Get_Status(int? status) {
+            var st = "";
+            if (status ==  1)
+            {
+                st = "Đang sửa";
+            }
+    
+            return st;
+        }
+
+
         public JsonResult ExportToExcel(int? IdProject)
         {
             Ql.Configuration.ProxyCreationEnabled = false;
-            var charts = Ql.DeviceOfProjectAll(IdProject).Select(i => new { i.DeviceCode, i.DeviceName, i.TypeName, i.Configuration, i.DateOfDelivery, i.Notes }).ToList();
+            var charts = Ql.DeviceOfProjectAll(IdProject).Select(i => new { i.DeviceCode, i.DeviceName, i.TypeName, i.Configuration, i.DateOfDelivery, i.Notes,i.StatusRepair }).ToList();
             var model = charts.ToList();
+          
+            var a = "";
+         //   var status = "";
+            List<NewConfig> numbers = new List<NewConfig>();
+            for (int i = 0; i < model.Count; ++i)
+            {
+              var  status =  Get_Status(model[i].StatusRepair);
+                a = HtmlToPlainText(model[i].Configuration);
+                var b = @String.Format("{0:dd-MM-yyyy}", model[i].DateOfDelivery);
+                //var NewConfig = model[i].Configuration.Replace(model[i].Configuration, a);                                                       
+                //new NewConfig { DeviceCode = model[i].DeviceCode, DeviceName = model[i].DeviceName, TypeName=  model[i].TypeName, Configuration = a, DateOfDelivery = model[i].DateOfDelivery, Notes = model[i].Notes };            
+                numbers.Add(new NewConfig { DeviceCode = model[i].DeviceCode, DeviceName = model[i].DeviceName, TypeName = model[i].TypeName, Configuration = a, DateOfDelivery = b, Notes = model[i].Notes, Status = status });
+            }
+
             using (StringWriter sw = new StringWriter())
             {
                 using (System.Web.UI.HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw))
                 {
                     GridView grid = new GridView();
-                    grid.DataSource = model;
+                    grid.DataSource = numbers;
                     grid.DataBind();
                     Response.ClearContent();
                     Response.Buffer = true;

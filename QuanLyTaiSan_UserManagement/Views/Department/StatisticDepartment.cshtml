@@ -7,7 +7,7 @@
 <section class="panel">
     <header class="panel-heading tcssPadb">
         <div class="">
-            Thống kê dự án
+            Thống kê phòng 
             <div class="btn-group " style="float:right">
                 <button class="btn dropdown-toggle btn-white" data-toggle="dropdown">
                     Export<i class="icon-angle-down"></i>
@@ -24,11 +24,11 @@
             <table class="display panel-body table table-bordered table-striped table-hover table-responsive" id="exampleT">
                 <thead>
                     <tr>
-                        <th>Mã dự án </th>
-                        <th>Tên dự án </th>
+                        <th>Mã phòng </th>
+                        <th>Tên phòng </th>
                         <th>Trạng thái</th>
                         <th>Thiết bị </th>
-                        <th>Thiết bị còn trong dự án</th>
+                        <th>Thiết bị còn trong phòng</th>
                         <th>Thiết bị đã trả</th>
                         <th>Xem chi tiết</th>
                     </tr>
@@ -43,11 +43,12 @@
                             <td style="text-align:right">@item.NumDevice</td>
                             <td style="text-align:right">@item.NumDeviceActive</td>
                             <td style="text-align:right">@item.NumDeviceReturn </td>
+                            
                             <td class="center">
                                 @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>
 ).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("EditProject")))
                                 {*@
-                                    <a class="edit" href="@Url.Action("EditProject","Project",new{Id=@item.Id})"><i class="icon-eye-open"></i></a>
+                                    <a class="edit" href="@Url.Action("EditDepartment","Department",new{Id=@item.Id})"><i class="icon-eye-open"></i></a>
                                 @*}*@
                             </td>
                         </tr>

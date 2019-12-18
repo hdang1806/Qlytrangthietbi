@@ -36,11 +36,16 @@ namespace QuanLyTaiSan_UserManagement.Models
         public virtual DbSet<RepairDetail> RepairDetails { get; set; }
         public virtual DbSet<RepairType> RepairTypes { get; set; }
         public virtual DbSet<RequestDevice> RequestDevices { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<ScheduleTest> ScheduleTests { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UsageDevice> UsageDevices { get; set; }
+        public virtual DbSet<DeviceDevice> DeviceDevices { get; set; }
+        public virtual DbSet<DeviceTypeComponantType> DeviceTypeComponantTypes { get; set; }
+        public virtual DbSet<Credential> Credentials { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<UserLogin> UserLogins { get; set; }
     
         public virtual int AddDevice(string deviceCode, string newCode, string deviceName, Nullable<int> typeOfDevice, Nullable<int> parentId, string configuration, Nullable<double> price, string purchaseContract, Nullable<System.DateTime> dateOfPurchase, Nullable<int> supplierId, Nullable<int> projectId, Nullable<System.DateTime> guarantee, string notes, Nullable<int> userId, Nullable<int> status)
         {
@@ -625,7 +630,7 @@ namespace QuanLyTaiSan_UserManagement.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchDeviceType_Result>("SearchDeviceType");
         }
     
-        public virtual ObjectResult<SearchProject_Result> SearchProject(Nullable<int> managerProject, Nullable<int> status, string projectSymbol)
+        public virtual ObjectResult<SearchProject_Result> SearchProject(Nullable<int> managerProject, Nullable<int> status, Nullable<int> typeProject, string projectSymbol)
         {
             var managerProjectParameter = managerProject.HasValue ?
                 new ObjectParameter("managerProject", managerProject) :
@@ -635,11 +640,15 @@ namespace QuanLyTaiSan_UserManagement.Models
                 new ObjectParameter("status", status) :
                 new ObjectParameter("status", typeof(int));
     
+            var typeProjectParameter = typeProject.HasValue ?
+                new ObjectParameter("TypeProject", typeProject) :
+                new ObjectParameter("TypeProject", typeof(int));
+    
             var projectSymbolParameter = projectSymbol != null ?
                 new ObjectParameter("ProjectSymbol", projectSymbol) :
                 new ObjectParameter("ProjectSymbol", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchProject_Result>("SearchProject", managerProjectParameter, statusParameter, projectSymbolParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchProject_Result>("SearchProject", managerProjectParameter, statusParameter, typeProjectParameter, projectSymbolParameter);
         }
     
         public virtual ObjectResult<SearchRole_Result> SearchRole()
@@ -1411,6 +1420,109 @@ namespace QuanLyTaiSan_UserManagement.Models
         public virtual ObjectResult<DeviceHistory_Result> DeviceHistory()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DeviceHistory_Result>("DeviceHistory");
+        }
+    
+        public virtual ObjectResult<ChildrenOfDevice_Result> ChildrenOfDevice(Nullable<int> deviceCodeParents, Nullable<int> typeSymbolChildren)
+        {
+            var deviceCodeParentsParameter = deviceCodeParents.HasValue ?
+                new ObjectParameter("DeviceCodeParents", deviceCodeParents) :
+                new ObjectParameter("DeviceCodeParents", typeof(int));
+    
+            var typeSymbolChildrenParameter = typeSymbolChildren.HasValue ?
+                new ObjectParameter("TypeSymbolChildren", typeSymbolChildren) :
+                new ObjectParameter("TypeSymbolChildren", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ChildrenOfDevice_Result>("ChildrenOfDevice", deviceCodeParentsParameter, typeSymbolChildrenParameter);
+        }
+    
+        public virtual ObjectResult<TypeComponantOfDevice_Result> TypeComponantOfDevice(Nullable<int> typeParent)
+        {
+            var typeParentParameter = typeParent.HasValue ?
+                new ObjectParameter("TypeParent", typeParent) :
+                new ObjectParameter("TypeParent", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TypeComponantOfDevice_Result>("TypeComponantOfDevice", typeParentParameter);
+        }
+    
+        public virtual int AddTypeChidren(Nullable<int> typeChidren, Nullable<int> typeParent, Nullable<int> type_TypeCom)
+        {
+            var typeChidrenParameter = typeChidren.HasValue ?
+                new ObjectParameter("TypeChidren", typeChidren) :
+                new ObjectParameter("TypeChidren", typeof(int));
+    
+            var typeParentParameter = typeParent.HasValue ?
+                new ObjectParameter("TypeParent", typeParent) :
+                new ObjectParameter("TypeParent", typeof(int));
+    
+            var type_TypeComParameter = type_TypeCom.HasValue ?
+                new ObjectParameter("Type_TypeCom", type_TypeCom) :
+                new ObjectParameter("Type_TypeCom", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddTypeChidren", typeChidrenParameter, typeParentParameter, type_TypeComParameter);
+        }
+    
+        public virtual int AddDeviceOfDevice(Nullable<int> idParent, Nullable<int> idChild, Nullable<int> typeChild, Nullable<int> typeParent, Nullable<int> typeComponant)
+        {
+            var idParentParameter = idParent.HasValue ?
+                new ObjectParameter("IdParent", idParent) :
+                new ObjectParameter("IdParent", typeof(int));
+    
+            var idChildParameter = idChild.HasValue ?
+                new ObjectParameter("IdChild", idChild) :
+                new ObjectParameter("IdChild", typeof(int));
+    
+            var typeChildParameter = typeChild.HasValue ?
+                new ObjectParameter("TypeChild", typeChild) :
+                new ObjectParameter("TypeChild", typeof(int));
+    
+            var typeParentParameter = typeParent.HasValue ?
+                new ObjectParameter("TypeParent", typeParent) :
+                new ObjectParameter("TypeParent", typeof(int));
+    
+            var typeComponantParameter = typeComponant.HasValue ?
+                new ObjectParameter("TypeComponant", typeComponant) :
+                new ObjectParameter("TypeComponant", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddDeviceOfDevice", idParentParameter, idChildParameter, typeChildParameter, typeParentParameter, typeComponantParameter);
+        }
+    
+        public virtual int DeleteDeviceOfDevice(Nullable<int> idParent, Nullable<int> idChild, string resons)
+        {
+            var idParentParameter = idParent.HasValue ?
+                new ObjectParameter("IdParent", idParent) :
+                new ObjectParameter("IdParent", typeof(int));
+    
+            var idChildParameter = idChild.HasValue ?
+                new ObjectParameter("IdChild", idChild) :
+                new ObjectParameter("IdChild", typeof(int));
+    
+            var resonsParameter = resons != null ?
+                new ObjectParameter("Resons", resons) :
+                new ObjectParameter("Resons", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteDeviceOfDevice", idParentParameter, idChildParameter, resonsParameter);
+        }
+    
+        public virtual int DeleteAllRole(string groupId)
+        {
+            var groupIdParameter = groupId != null ?
+                new ObjectParameter("GroupId", groupId) :
+                new ObjectParameter("GroupId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteAllRole", groupIdParameter);
+        }
+    
+        public virtual int UpdateUserDevice(Nullable<int> idDv, Nullable<int> idUser)
+        {
+            var idDvParameter = idDv.HasValue ?
+                new ObjectParameter("IdDv", idDv) :
+                new ObjectParameter("IdDv", typeof(int));
+    
+            var idUserParameter = idUser.HasValue ?
+                new ObjectParameter("IdUser", idUser) :
+                new ObjectParameter("IdUser", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUserDevice", idDvParameter, idUserParameter);
         }
     }
 }

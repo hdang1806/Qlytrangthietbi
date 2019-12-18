@@ -15,6 +15,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
 {
     // [Authorize]
     // [AuthorizationHandler]
+   // [HasCredential(RoleID = "")]
     public class DepartmentController : Controller
     {
         QuanLyTaiSanCtyEntities Ql = new QuanLyTaiSanCtyEntities();
@@ -24,24 +25,24 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         //  [AuthorizationViewHandler]
         public ActionResult Department()
         {
-            ViewBag.ProjectNb = Ql.SearchProject(null, 4, null).Count();
+            ViewBag.ProjectNb = Ql.SearchProject(null, null,1, null).Count();
             ViewData["User"] = Ql.Users.ToList();
-            var lstProject = Ql.SearchProject(null, 4, null).ToList();
+            var lstProject = Ql.SearchProject(null, null,1, null).ToList();
             return View(lstProject);
         }
         [HttpPost]
-        public ActionResult SeachProject(FormCollection colection, ProjectDKC Project)
+        public ActionResult SeachDepartment(FormCollection colection, ProjectDKC Project)
         {
             ViewData["User"] = Ql.Users.ToList();
             String ProjectSymbol = colection["ProjectSymbol"].Trim();
             //   int? Status = colection["Status"].Equals("0") ? (int?)null : Convert.ToInt32(colection["Status"]);
             int? ManagerProject = colection["ManagerProject"].Equals("0") ? (int?)null : Convert.ToInt32(colection["ManagerProject"]);
-            var lstProject = Ql.SearchProject(ManagerProject, 4, ProjectSymbol).ToList();
+            var lstProject = Ql.SearchProject(ManagerProject, null,1, ProjectSymbol).ToList();
             var ViewProject = lstProject;
             // ViewBag.Status = Status;
             ViewBag.ManagerProject = ManagerProject;
             ViewBag.ProjectSymbol = ProjectSymbol;
-            ViewBag.ProjectNb = Ql.SearchProject(ManagerProject, 4, ProjectSymbol).Count();
+            ViewBag.ProjectNb = Ql.SearchProject(ManagerProject, null,1, ProjectSymbol).Count();
             return View("Department", ViewProject);
         }
         //  [AuthorizationViewHandler]
@@ -129,7 +130,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         }
 
         //  [AuthorizationViewHandler]
-        public JsonResult DeleteProject(string Id)
+        public JsonResult DeleteDepartment(string Id)
         {
             bool checkIsset = true;
             bool result = false;
@@ -158,7 +159,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //   [AuthorizationViewHandler]
-        public JsonResult DeleteProject1(int Id)
+        public JsonResult DeleteDepartment1(int Id)
         {
             bool result = false;
             var dv = Ql.DeviceOfProjects.Where(x => x.ProjectId == Id && x.Status == 1);
@@ -175,7 +176,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //  [AuthorizationViewHandler]
-        public ActionResult AddDeviceInProject(int Id, int DeviceType)
+        public ActionResult AddDeviceInDepartment(int Id, int DeviceType)
         {
             ViewData["DeviceType"] = Ql.DeviceTypes.ToList();
             if (DeviceType != 0)
@@ -201,7 +202,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return View(Ql.ProjectDKCs.Find(Id));
         }
         //   [AuthorizationViewHandler]
-        public ActionResult AddDeviceInProject1(int Idpr, int Iddv, String Notes)
+        public ActionResult AddDeviceInDepartment1(int Idpr, int Iddv, String Notes)
         {
             bool result = false;
             int checkdele = Ql.AddDeviceOfProject(Idpr, Iddv, Notes);
@@ -210,7 +211,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ReturnDeviceInProject(int Idpr, int Iddv, string notes)
+        public ActionResult ReturnDeviceInDepartment(int Idpr, int Iddv, String notes)
         {
             bool result = false;
             int checkdele = Ql.ReturnDeviceOfProject(Idpr, Iddv, notes);
@@ -219,20 +220,20 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //   [AuthorizationViewHandler]
-        public JsonResult AddDeviceProjectAll(string Id, int PJ)
+        public JsonResult AddDeviceDepartmentAll(string Id, int PJ,String Nt)
         {
 
             var lstId = Id.Split(',');
             for (int i = 0; i < lstId.Length; i++)
             {
                 if (!lstId[i].Equals(""))
-                    Ql.AddDeviceOfProject(PJ, Convert.ToInt32(lstId[i]), "");
+                    Ql.AddDeviceOfProject(PJ, Convert.ToInt32(lstId[i]), Nt);
             }
             bool result = true;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         // [AuthorizationViewHandler]
-        public JsonResult ReturnDeviceProjectAll(string Id, int PJ, string notes)
+        public JsonResult ReturnDeviceDepartmentAll(string Id, int PJ, string notes)
         {
             var lstId = Id.Split(',');
             for (int i = 0; i < lstId.Length; i++)
@@ -243,7 +244,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             bool result = true;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult StatisticsDevicesInProject()
+        public ActionResult StatisticsDevicesInDepartment()
         {
             return View();
         }
@@ -278,25 +279,37 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             public string DeviceName { get; set; }
             public string TypeName { get; set; }
             public string Configuration { get; set; }
-            public DateTime? DateOfDelivery { get; set; }
+            public string DateOfDelivery { get; set; }
             public string Notes { get; set; }
+            public string StatusRepair { get; set; }
         }
 
+        public string Get_Status(int? status)
+        {
+            var st = "";
+            if (status == 1)
+            {
+                st = "Đang sửa";
+            }
 
+            return st;
+        }
 
         public JsonResult ExportToExcel(int? IdProject)
         {
             Ql.Configuration.ProxyCreationEnabled = false;
-            var charts = Ql.DeviceOfProjectAll(IdProject).Select(i => new { i.DeviceCode, i.DeviceName, i.TypeName, i.Configuration, i.DateOfDelivery, i.Notes }).ToList();
+            var charts = Ql.DeviceOfProjectAll(IdProject).Select(i => new { i.DeviceCode, i.DeviceName, i.TypeName, i.Configuration, i.DateOfDelivery, i.StatusRepair,i.Notes }).ToList();
             var model = charts.ToList();
             var a = "";
             List<NewConfig> numbers = new List<NewConfig>();
             for (int i = 0; i < model.Count; ++i)
             {
+                var status_rp = Get_Status(model[i].StatusRepair);
                 a = HtmlToPlainText(model[i].Configuration);
+                var b = @String.Format("{0:dd-MM-yyyy}", model[i].DateOfDelivery);
                 //var NewConfig = model[i].Configuration.Replace(model[i].Configuration, a);
                 //new NewConfig { DeviceCode = model[i].DeviceCode, DeviceName = model[i].DeviceName, TypeName=  model[i].TypeName, Configuration = a, DateOfDelivery = model[i].DateOfDelivery, Notes = model[i].Notes };            
-                numbers.Add(new NewConfig { DeviceCode = model[i].DeviceCode, DeviceName = model[i].DeviceName, TypeName = model[i].TypeName, Configuration = a, DateOfDelivery = model[i].DateOfDelivery, Notes = model[i].Notes });
+                numbers.Add(new NewConfig { DeviceCode = model[i].DeviceCode, DeviceName = model[i].DeviceName, TypeName = model[i].TypeName, Configuration = a, DateOfDelivery =b, Notes = model[i].Notes, StatusRepair = status_rp });
             }
             using (StringWriter sw = new StringWriter())
             {
@@ -325,12 +338,12 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         }
 
         //   [AuthorizationViewHandler]
-        public ActionResult AddDeviceInProjectMachine(int Id)
+        public ActionResult AddDeviceInDepartmentMachine(int Id)
         {
             return View(Ql.ProjectDKCs.Find(Id));
         }
         [HttpGet]
-        public JsonResult GetDeviceInProjectMachine(string dvc)
+        public JsonResult GetDeviceInDepartmentMachine(string dvc)
         {
             Ql.Configuration.ProxyCreationEnabled = false;
             bool Result = false;
@@ -346,12 +359,12 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         }
 
         //    [AuthorizationViewHandler]
-        public ActionResult ReturnDeviceInProjectMachine(int Id)
+        public ActionResult ReturnDeviceInDepartmentMachine(int Id)
         {
             return View(Ql.ProjectDKCs.Find(Id));
         }
         [HttpGet]
-        public JsonResult GetReturnDeviceInProjectMachine(string dvc, int pjId)
+        public JsonResult GetReturnDeviceInDepartmentMachine(string dvc, int pjId)
         {
             Ql.Configuration.ProxyCreationEnabled = false;
             bool Result = false;
@@ -367,7 +380,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         }
 
         //    [AuthorizationViewHandler]
-        public ActionResult StatisticProject()
+        public ActionResult StatisticDepartment()
         {
             ViewData["StatisticProject"] = Ql.StatisticProject().ToList();
             return View();

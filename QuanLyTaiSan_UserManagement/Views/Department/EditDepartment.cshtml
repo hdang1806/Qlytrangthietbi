@@ -137,7 +137,7 @@
                         </div>
                         @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceInProject1") || k.ActionName.Equals("AddDeviceProjectAll")))
                             {*@
-                        <a id="btnAddeviceofProject" class="btn btn-success" href="@Url.Action("AddDeviceInProject", "Project", new { id = Model.Id, DeviceType = 0 })">Thêm thiết bị <i class="icon-plus"></i></a>
+                        <a id="btnAddeviceofProject" class="btn btn-success" href="@Url.Action("AddDeviceInDepartment", "Department", new { id = Model.Id, DeviceType = 0 })">Thêm thiết bị <i class="icon-plus"></i></a>
 
                         @*}*@
 
@@ -153,13 +153,13 @@
                                 <li>
                                     @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceInProjectMachine")))
                                         {*@
-                                    <a id="btnAddeviceofProjectMachine" class="btn" href="@Url.Action("AddDeviceInProjectMachine", "Project", new { id = Model.Id})">Quét thêm thiết bị <i class="icon-barcode"></i></a>
+                                    <a id="btnAddeviceofProjectMachine" class="btn" href="@Url.Action("AddDeviceInDepartmentMachine", "Department", new { id = Model.Id})">Quét thêm thiết bị <i class="icon-barcode"></i></a>
                                     @*}*@
                                 </li>
                                 <li>
                                     @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("ReturnDeviceInProjectMachine")))
                                         {*@
-                                    <a id="btnAddeviceofProjectMachine" class="btn  " href="@Url.Action("ReturnDeviceInProjectMachine", "Project", new { id = Model.Id})">Quét trả thiết bị <i class="icon-barcode"></i></a>
+                                    <a id="btnAddeviceofProjectMachine" class="btn  " href="@Url.Action("ReturnDeviceInDepartmentMachine", "Department", new { id = Model.Id})">Quét trả thiết bị <i class="icon-barcode"></i></a>
                                     @*}*@
                                 </li>
                             </ul>
@@ -228,8 +228,8 @@
                 </section>
                 <!--The end table-->
             </div>
-            @Html.Partial("ReturnDeviceInProjectPartial")
-            @Html.Partial("ReturnDeviceInProjectAllPartial")
+            @Html.Partial("ReturnDeviceInDepartmentPartial")
+            @Html.Partial("ReturnDeviceInDepartmentAllPartial")
             <div class="col-md-2 tcssMarT">
                 <div class="panel-body">
                     <div class="row">
@@ -373,6 +373,7 @@
                 response = response.replace("TypeName", "Tên Loại");
                 response = response.replace("Configuration", "Cấu Hình");
                 response = response.replace("Notes", "Mô tả");
+                response = response.replace("StatusRepair", "Trạng thái");
                 response = response.replace("DateOfDelivery", "Ngày mượn");
                // response = response.replace(Re) .rows();
                 var ua = window.navigator.userAgent;

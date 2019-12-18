@@ -200,7 +200,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Attribute\AuthorizationHandler.cs" />
     <Compile Include="Attribute\AuthorizationViewHandler.cs" />
+    <Compile Include="Common\AuthorLoginAttribute.cs" />
+    <Compile Include="Common\CommonConstants.cs" />
+    <Compile Include="Common\CommonConstants1.cs" />
+    <Compile Include="Common\Encryptor.cs" />
+    <Compile Include="Common\HasCredentialAttribute.cs" />
+    <Compile Include="Common\UserDao.cs" />
+    <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Account_App_NewController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DeviceController.cs" />
@@ -215,7 +223,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\ScheduleTestController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,6 +239,13 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ChildrenOfDevice_Result.cs">
+      <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClassDeviceDevice.cs" />
+    <Compile Include="Models\Credential.cs">
+      <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DestructivelDevice.cs">
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
@@ -241,6 +256,9 @@
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DeviceById_Result.cs">
+      <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeviceDevice.cs">
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DeviceHistory_Result.cs">
@@ -258,6 +276,9 @@
     <Compile Include="Models\DeviceTypeById_Result.cs">
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeviceTypeComponantType.cs">
+      <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\HistoryRepairDetails_Result.cs">
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
@@ -265,6 +286,7 @@
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OderCode.cs">
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
@@ -374,6 +396,9 @@
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SystemFeatureModels.cs" />
+    <Compile Include="Models\TypeComponantOfDevice_Result.cs">
+      <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UsageDevice.cs">
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
@@ -382,6 +407,12 @@
     </Compile>
     <Compile Include="Models\UserAuthorizationContext.cs" />
     <Compile Include="Models\UserById_Result.cs">
+      <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserGroup.cs">
+      <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserLogin.cs">
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -913,13 +944,13 @@
     <Content Include="Views\Employees\Partialview.cshtml" />
     <Content Include="Views\Employees\Role.cshtml" />
     <Content Include="Views\Employees\UserManagement.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\UserRole\UserIndex.cshtml" />
     <Content Include="Views\Device\Deviceliquidation.cshtml" />
     <Content Include="Views\Device\TypeDevice.cshtml" />
     <Content Include="Views\DeviceType\DeviceType.cshtml" />
     <Content Include="Views\DeviceType\DetailType.cshtml" />
     <Content Include="Views\DeviceType\CreateDeviceType.cshtml" />
-    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\RoleIndex.cshtml" />
     <Content Include="Views\DeviceType\DeviceTypestatistical.cshtml" />
     <Content Include="Views\DeviceType\StatisticalDeviceType.cshtml" />
     <Content Include="Views\Device\StatisticalDevice.cshtml" />
@@ -930,18 +961,21 @@
     <Content Include="Views\Project\ReturnDeviceInProjectMachine.cshtml" />
     <Content Include="Views\ScheduleTest\DeleteHistorySchedutestPartial.cshtml" />
     <Content Include="Views\Department\AddDepartment.cshtml" />
-    <Content Include="Views\Department\AddDeviceInProject.cshtml" />
-    <Content Include="Views\Department\AddDeviceInProjectAllPartial.cshtml" />
-    <Content Include="Views\Department\AddDeviceInProjectMachine.cshtml" />
-    <Content Include="Views\Department\AddDeviceInProjectPartial.cshtml" />
-    <Content Include="Views\Department\DeleteProjectPartial.cshtml" />
+    <Content Include="Views\Department\AddDeviceInDepartment.cshtml" />
+    <Content Include="Views\Department\AddDeviceInDepartmentAllPartial.cshtml" />
+    <Content Include="Views\Department\AddDeviceInDepartmentMachine.cshtml" />
+    <Content Include="Views\Department\AddDeviceInDepartmentPartial.cshtml" />
+    <Content Include="Views\Department\DeleteDepartmentPartial.cshtml" />
     <Content Include="Views\Department\Department.cshtml" />
     <Content Include="Views\Department\EditDepartment.cshtml" />
-    <Content Include="Views\Department\ProjectAjax.cshtml" />
-    <Content Include="Views\Department\ReturnDeviceInProjectAllPartial.cshtml" />
-    <Content Include="Views\Department\ReturnDeviceInProjectMachine.cshtml" />
-    <Content Include="Views\Department\ReturnDeviceInProjectPartial.cshtml" />
-    <Content Include="Views\Department\StatisticProject.cshtml" />
+    <Content Include="Views\Department\ReturnDeviceInDepartmentAllPartial.cshtml" />
+    <Content Include="Views\Department\ReturnDeviceInDepartmentMachine.cshtml" />
+    <Content Include="Views\Department\ReturnDeviceInDepartmentPartial.cshtml" />
+    <Content Include="Views\Department\StatisticDepartment.cshtml" />
+    <Content Include="Views\Device\DeviceComponantPartial.cshtml" />
+    <Content Include="Views\Device\SearchDeviceComponant.cshtml" />
+    <Content Include="Views\Account_App_New\Login_New.cshtml" />
+    <Content Include="Views\Shared\Error401.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\img\fonts\" />

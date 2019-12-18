@@ -22,7 +22,6 @@ namespace QuanLyTaiSan_UserManagement.Models
         public string ProjectName { get; set; }
         public string Configuration { get; set; }
         public string Name { get; set; }
-        public int Status { get; set; }
         public Nullable<int> SupplierId { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> StatusRepair { get; set; }
@@ -31,5 +30,7 @@ namespace QuanLyTaiSan_UserManagement.Models
         public string ProjectSymbol { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string PriceOne { get; set; }
+        public Nullable<int> ParentId { get; set; }
+        public Nullable<int> Status { get; set; }
     }
 }

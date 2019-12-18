@@ -29,7 +29,7 @@ namespace QuanLyTaiSan_UserManagement.Models
 
     
 
-    public class ShortInformationUser
+    public class InformationUser
     {
         public string Id { get; set; }
         public string Username { get; set; }

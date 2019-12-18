@@ -31,3 +31,13 @@ D:\QLTS\Quản lí tài sản công ty DKC\QuanLyTaiSan_UserManagement\DataAcces
 D:\QLTS\Quản lí tài sản công ty DKC\QuanLyTaiSan_UserManagement\DataAccess\obj\Debug\DataAccess.dll
 D:\QLTS\Quản lí tài sản công ty DKC\QuanLyTaiSan_UserManagement\DataAccess\obj\Debug\DataAccess.pdb
 D:\QLTS\Quản lí tài sản công ty DKC\QuanLyTaiSan_UserManagement\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\DataAccess.dll.config
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\DataAccess.dll
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\DataAccess.pdb
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\EntityFramework.dll
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\EntityFramework.xml
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\obj\Debug\DataAccess.dll
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\obj\Debug\DataAccess.pdb

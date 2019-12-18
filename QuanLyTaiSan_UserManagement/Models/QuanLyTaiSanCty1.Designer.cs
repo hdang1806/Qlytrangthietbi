@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\QLTS\Quản lí tài sản công ty DKC\QuanLyTaiSan_UserManagement\QuanLyTaiSan_UserManagement\Models\QuanLyTaiSanCty.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Clone_GitHub\DATN_QLTSCongTy\QuanLyTaiSan_UserManagement\Models\QuanLyTaiSanCty.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

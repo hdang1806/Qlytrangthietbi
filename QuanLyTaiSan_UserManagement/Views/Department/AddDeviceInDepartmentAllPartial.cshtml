@@ -12,7 +12,16 @@
             <div class="modal-body">
                 <!--Containt-->
                 <div class="form-body">
-                    <label> Bạn chắc chắn muốn thêm thiết bị vào dự án</label>
+                    <label> Bạn chắc chắn muốn thêm thiết bị vào @Model.ProjectName</label>
+                </div>
+                <div class="form-group m-bot15 clearfix">
+                   
+                    <div class="col-md-3">
+                        <label>Chú thích</label>
+                    </div>
+                    <div class="col-md-9">
+                        <textarea class="cke_editable form-control form myctr" rows="3" id="Notes" name="Notes"></textarea>
+                    </div>
                 </div>
                 <!--The end Containt-->
             </div>
@@ -52,13 +61,15 @@
             $('#DeviceInProjectAll').click(function () {
                 var pjId = $("#hiddenIdpr").val();
                 var dvId = $("#hiddenIddv").val();
+                var notes = $("#Notes").val();
                 console.log(dvId);
                 $.ajax({
                     type: "POST",
-                    url: "/Project/AddDeviceProjectAll",
+                    url: "/Department/AddDeviceDepartmentAll",
                     data: {
                         Id: dvId,
-                        PJ: pjId
+                        PJ: pjId,
+                        Nt: notes
                     },
                     success: function (result) {
                         if (result) {
@@ -75,19 +86,21 @@
             $('#AddDeviceInProjectReturn').click(function () {
                 var pjId = $("#hiddenIdpr").val();
                 var dvId = $("#hiddenIddv").val();
+                var Notes = $("#Notes").val();
                 //console.log(dvId);
                 $.ajax({
                     type: "POST",
-                    url: "/Project/AddDeviceProjectAll",
+                    url: "/Department/AddDeviceDepartmentAll",
                     data: {
                         Id: dvId,
-                        PJ: pjId
+                        PJ: pjId,
+                        Nt: Notes
                     },
                     success: function (result) {
                         if (result) {
                             $("#myModalAll").modal("hide");
 
-                            window.location = '@Url.Action("EditProject", "Project", new { id = Model.Id })';
+                            window.location = '@Url.Action("EditDepartment", "Department", new { id = Model.Id })';
                         } else {
                             $("#myModalAll").modal("hide");
                             alert("Thêm thiết bị lỗi");

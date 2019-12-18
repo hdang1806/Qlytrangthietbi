@@ -8,12 +8,12 @@
 }
 <section class="panel">
     <header class="panel-heading m-bot15" style="padding-bottom:20px">
-        <a class="edit panel-default" style="margin-right:10px" href="@Url.Action("EditProject", "Project", new { id = Model.Id })">
+        <a class="edit panel-default" style="margin-right:10px" href="@Url.Action("EditDepartment", "Department", new { id = Model.Id })">
             <span class="icon-border">
                 <i class="icon-arrow-left"> </i>
             </span>
         </a>
-        <h4 style="display:inline"> Trả thiết bị về kho (Dự án @Model.ProjectName) </h4>
+        <h4 style="display:inline"> Trả thiết bị về kho (Phòng @Model.ProjectName) </h4>
         <button type="button" class="btn btn-success btn-large tcssLeft" href="javascript:void(0)" onclick="StartScaner()">Bắt đầu quét</button>
     </header>
     <!--Tabale Device of Project-->
@@ -21,10 +21,10 @@
         <input class="form-control input-sm myctr" size="100" name="DeviceBarcode" id="DeviceBarcode" onchange="ClickScanner()" autocomplete="off">
     </div>
     <div class="col-md-9 ">
-        @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("ReturnDeviceProjectAll")))
-        {
+        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("ReturnDeviceProjectAll")))
+        {*@
             <button class="btn  btn-primary tcssLeft" type="button" href="javascript:void(0)" onclick="ReturnDeviceInProjectAll()">Trả thiết bị  <i class="icon-share-alt"></i></button>
-        }
+        @*}*@
     </div>
     <section class="panel-body">
         <div class="tcssMarT m-bot15">
@@ -50,14 +50,14 @@
     </section>
     <div class="col-md-12 form-group ">
         <div class="FontHeader">
-            @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("ReturnDeviceProjectAll")))
-            {
+            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("ReturnDeviceProjectAll")))
+            {*@
                 <button class="btn btn-primary btn-large" type="button" href="javascript:void(0)" onclick="ReturnDeviceInProjectAll()">Trả thiết bị  <i class="icon-share-alt"></i></button>
-            }
-            <a class="btn btn-white" href="@Url.Action("EditProject","Project",new {id = Model.Id })">Hủy</a>
+            @*}*@
+            <a class="btn btn-white" href="@Url.Action("Department","Department",new {id = Model.Id })">Hủy</a>
         </div>
     </div>
-    @Html.Partial("ReturnDeviceInProjectAllPartial")
+    @Html.Partial("ReturnDeviceInDepartmentAllPartial")
 </section>
 <!--The end table-->
 <script>
@@ -76,7 +76,7 @@
         if (Code == 1) { alert('Thiết Bị Đã Được Quét!'); $('#DeviceBarcode').val('') }
         else
             $.ajax({
-                url: '/Project/GetReturnDeviceInProjectMachine',
+                url: '/Department/GetReturnDeviceInDepartmentMachine',
                 data: {
                     dvc: Code,
                     pjId: pjId
@@ -91,7 +91,7 @@
                             $('#DeviceBarcode').val('')
                         }
                     }
-                    else { alert("Thiết bị không có trong dự án "); $('#DeviceBarcode').val('') }
+                    else { alert("Thiết bị không có trong phòng "); $('#DeviceBarcode').val('') }
                 },
             });
     }

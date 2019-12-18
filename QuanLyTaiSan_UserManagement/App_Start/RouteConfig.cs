@@ -16,7 +16,8 @@ namespace QuanLyTaiSan_UserManagement
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Account_App_New", action = "Login_New", id = UrlParameter.Optional }
+                // defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

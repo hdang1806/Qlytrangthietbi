@@ -29,7 +29,7 @@
     <!--The end header-->
     <!--Seach-->
     <div class="row">
-        @using (Html.BeginForm("SeachProject", "Department", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal  editcontent" }))
+        @using (Html.BeginForm("SeachDepartment", "Department", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal  editcontent" }))
             {
             @Html.AntiForgeryToken()
             <div class="col-md-10 ">
@@ -161,7 +161,7 @@
 </section>
 
 
-@Html.Partial("DeleteProjectPartial")
+@Html.Partial("DeleteDepartmentPartial")
 <!-- page end-->
 <!--Scrip-->
 <!--The end Scrip-->
@@ -217,7 +217,7 @@
                         } else {
                             $("#loaderDiv").hide();
                             $("#myModaldelete1").modal("hide");
-                            alert("Xóa dự án lỗi. Có dự án chưa trả hết thiết bị ");
+                            alert("Xóa phòng lỗi. Có phòng chưa trả hết thiết bị ");
                         }
                     }
                 })

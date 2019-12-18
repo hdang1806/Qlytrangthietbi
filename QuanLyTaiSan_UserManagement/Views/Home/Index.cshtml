@@ -8,7 +8,7 @@
     <div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
-                <h3>Phần mềm quản lý tài sản công ty DKC.</h3>
+                <h3>Phần mềm quản lý tài sản công ty BMT.</h3>
             </header>
             <div class="panel-body">
                 <div class="row state-overview">
@@ -60,7 +60,7 @@
                 </div>
                 <div class="row state-overview">
                     <div class="col-md-4 zoom">
-                        <a href="@Url.Action("Project", "Project")">
+                        <a href="@Url.Action("Department", "Department")">
                             <section class="panel" style="min-height:0px;border: 1px solid #ff6c60">
                                 <div class="symbol red">
                                     <i class="icon-briefcase"></i>
@@ -69,7 +69,7 @@
                                     <h1 class="count">
                                         @ListCount["Project"]
                                     </h1>
-                                    <p>Dự Án Số Hóa</p>
+                                    <p>Phòng Ban</p>
                                 </div>
                             </section>
                         </a>
@@ -143,14 +143,14 @@
                     @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("StatisticProject")))
                     {*@
                         <div class="col-md-4 zoom">
-                            <a href="@Url.Action("StatisticProject", "Project")">
+                            <a href="@Url.Action("StatisticDepartment", "Department")">
                                 <section class="panel" style="min-height:0px;border: 1px solid currentColor">
                                     <div class="symbol" style="background:currentColor">
                                         <i class="icon-bar-chart"></i>
                                     </div>
                                     <div class="value">
                                         <p class="count" style="margin-top: 11px;font-size: large;">
-                                            Thống Kê Dự Án
+                                            Thống Kê Phòng Ban
                                         </p>
                                     </div>
                                 </section>

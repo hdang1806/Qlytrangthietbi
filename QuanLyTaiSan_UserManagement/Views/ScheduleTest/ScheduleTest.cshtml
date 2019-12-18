@@ -90,10 +90,10 @@
                             <td style="width:17%" class="hidden-phone">@item.Notes</td>
                             <td style="width:3%" class="center"><a class="edit" href="@Url.Action("EditScheduleTest", "ScheduleTest", new { Id = @item.Id})"><i class="icon-eye-open"></i></a></td>
                             <td style="width:3%" class="center">
-                                @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("ScheduleTest") && k.ActionName.Equals("DeleteScheduleTest")))
-                                {
+                                @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("ScheduleTest") && k.ActionName.Equals("DeleteScheduleTest")))
+                                {*@
                                     <a class="edit" href="javascript:void(0)" onclick="ConfirmDelete(@item.Id)"><i class="icon-trash"></i></a>
-                                }
+                                @*}*@
                             </td>
                         </tr>
                     }

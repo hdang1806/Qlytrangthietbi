@@ -12,7 +12,7 @@ namespace QuanLyTaiSan_UserManagement.Helper
         {
             [Description("Rảnh")]
             Free = 0,
-            [Description("Tại dự án")]
+            [Description("Đang sử dụng")]
             Project,
             [Description("Đã Thanh Lý")]
             Liquidation,
@@ -94,7 +94,7 @@ namespace QuanLyTaiSan_UserManagement.Helper
         {
             [Description("Trả Về Kho")]
             Action = 0,
-            [Description("Trong Dự Án")]
+            [Description("Trong Phòng ban")]
             NoAction
             ,
         }
@@ -107,6 +107,15 @@ namespace QuanLyTaiSan_UserManagement.Helper
             Project,
             [Description("RepairDetails (Yêu cầu sửa chữa)")]
             RepairDetails,
+        }
+
+        public enum Type_TypeCom
+        {
+            [Description("Thiết bị ngoài")]
+            Dvout = 0,
+            [Description("Thiết bị trong")]
+            Dvint,
+           
         }
 
     }

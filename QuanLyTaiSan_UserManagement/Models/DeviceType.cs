@@ -19,6 +19,8 @@ namespace QuanLyTaiSan_UserManagement.Models
         {
             this.Devices = new HashSet<Device>();
             this.RequestDevices = new HashSet<RequestDevice>();
+            this.DeviceTypeComponantTypes = new HashSet<DeviceTypeComponantType>();
+            this.DeviceTypeComponantTypes1 = new HashSet<DeviceTypeComponantType>();
         }
     
         public int Id { get; set; }
@@ -31,5 +33,9 @@ namespace QuanLyTaiSan_UserManagement.Models
         public virtual ICollection<Device> Devices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestDevice> RequestDevices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeviceTypeComponantType> DeviceTypeComponantTypes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeviceTypeComponantType> DeviceTypeComponantTypes1 { get; set; }
     }
 }

@@ -78,7 +78,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         {
             bool result = false;
             var charts = data.SearchDevice(null, null, null, null,null).Where(x => x.UserId == Id).ToList().Count();
-            charts += data.SearchProject(Id, null, null).ToList().Count();
+            charts += data.SearchProject(Id, null,0, null).ToList().Count();
             charts += data.SearchRepairDetails(null, Id, null, null).ToList().Count();
             charts += data.RequestDevices.Where(x => x.UserApproved == Id).ToList().Count();
             charts += data.RequestDevices.Where(x => x.UserRequest == Id).ToList().Count();

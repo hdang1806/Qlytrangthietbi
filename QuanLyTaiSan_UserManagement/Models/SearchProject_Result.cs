@@ -25,5 +25,6 @@ namespace QuanLyTaiSan_UserManagement.Models
         public string FullName { get; set; }
         public string ProjectSymbol { get; set; }
         public Nullable<int> NumDevice { get; set; }
+        public Nullable<int> TypeProject { get; set; }
     }
 }
