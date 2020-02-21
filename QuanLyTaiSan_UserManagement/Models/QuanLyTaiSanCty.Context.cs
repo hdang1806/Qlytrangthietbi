@@ -665,17 +665,13 @@ namespace QuanLyTaiSan_UserManagement.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SearchSupplier", statusParameter);
         }
     
-        public virtual ObjectResult<SearchUser_Result> SearchUser(Nullable<int> roleId, Nullable<int> status)
+        public virtual ObjectResult<SearchUser_Result> SearchUser(Nullable<int> status)
         {
-            var roleIdParameter = roleId.HasValue ?
-                new ObjectParameter("RoleId", roleId) :
-                new ObjectParameter("RoleId", typeof(int));
-    
             var statusParameter = status.HasValue ?
                 new ObjectParameter("status", status) :
                 new ObjectParameter("status", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchUser_Result>("SearchUser", roleIdParameter, statusParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchUser_Result>("SearchUser", statusParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -1523,6 +1519,19 @@ namespace QuanLyTaiSan_UserManagement.Models
                 new ObjectParameter("IdUser", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUserDevice", idDvParameter, idUserParameter);
+        }
+    
+        public virtual int DeleteTypeParentTypeChild(Nullable<int> typeChidren, Nullable<int> typeParent)
+        {
+            var typeChidrenParameter = typeChidren.HasValue ?
+                new ObjectParameter("TypeChidren", typeChidren) :
+                new ObjectParameter("TypeChidren", typeof(int));
+    
+            var typeParentParameter = typeParent.HasValue ?
+                new ObjectParameter("TypeParent", typeParent) :
+                new ObjectParameter("TypeParent", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteTypeParentTypeChild", typeChidrenParameter, typeParentParameter);
         }
     }
 }

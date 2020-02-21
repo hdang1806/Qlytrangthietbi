@@ -4,15 +4,15 @@
 @{
     QuanLyTaiSanCtyEntities data = new QuanLyTaiSanCtyEntities();
     ViewData["DeviceType"] = data.DeviceTypes.ToList();
-    ViewBag.CountDeviceType = data.SearchDevice(null, null, null, null, null).Where(x => x.Status != 2).Count();
+    ViewBag.CountDeviceType = data.SearchDevice(null, null, null, null, null).Where(x => x.Status != 2 ).Count();
     ViewBag.CountDeviceType1 = data.SearchDevice(null, null, null, null, null).Where(x => x.Status == 2).Count();
-    ViewBag.CountPr = data.SearchProject(null, null,0, null).Count();
-    ViewBag.CountRoom = data.SearchProject(null, null,1, null).Count();
+    ViewBag.CountPr = data.SearchProject(null, null, 0, null).Count();
+    ViewBag.CountRoom = data.SearchProject(null, null, 1, null).Count();
     ViewBag.CountRepairDetails = data.SearchRepairDetails(null, null, null, null).Count();
     ViewBag.CountRequestDevice = data.SearchRequestDeviceNew(null, null).Count();
     ViewBag.CountScheduleTest = data.SearchScheduleTest(null, null).Count();
-    //var session = (UserLoginSec)HttpContext.Current.Session[CommonConstants.USER_SESSION];
-    //ViewBag.SecName = data.UserLogins.Where(x => x.UserName ==  session.UserName ).Select(x => x.FullName).FirstOrDefault();
+    var session = (UserLoginSec)HttpContext.Current.Session[CommonConstants.USER_SESSION];
+    ViewBag.SecName = data.UserLogins.Where(x => x.UserName == session.UserName).Select(x => x.FullName).FirstOrDefault();
 }
 <html>
 <head>
@@ -36,7 +36,6 @@
     <link href="~/Content/css/style-responsive.css" rel="stylesheet" />
     <link href="~/Content/css/mytcsss.css" rel="stylesheet" />
     <link href="~/Content/css/TcssProject.css" rel="stylesheet" />
-
     <script src="~/Content/js/jquery.js"></script>
     <script src="~/Content/js/jquery-1.8.3.min.js"></script>
 </head>
@@ -53,8 +52,6 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("Device")))
-                        {*@
                     <li class="sub-menu">
                         <a href="javascript:;" class="Device">
                             <i class="icon-laptop"></i>
@@ -67,90 +64,51 @@
                                 <li class="@item.Id"><a href="@Url.Action("TypeDevice", "Device", new { Id = item.Id })">@item.TypeName (@data.SearchDevice(null, item.Id, null, null, null).Where(x => x.Status != 2).Count())</a></li>
                             }
                             <li class="Deviceliquidation"><a href="@Url.Action("Deviceliquidation", "Device")">Thiết Bị Đã Thanh Lý (@ViewBag.CountDeviceType1)</a></li>
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("Create")))
-                                {*@
-                            <li class="Create">@Html.ActionLink("Thêm Thiết Bị Mới", "Create", "Device", new { Id = -1 }, null)</li>@*}*@
+
+                            <li class="Create">@Html.ActionLink("Thêm Thiết Bị Mới", "Create", "Device", new { Id = -1 }, null)</li>
                         </ul>
-                    </li>@*}*@
+                    </li>
                     <li class="sub-menu">
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("Project")))
-                            {*@
                         <a href="javascript:;" class="Department">
                             <i class="icon-home"></i>
                             <span>Phòng ban</span>
                         </a>
-                        @*}*@
                         <ul class="sub">
                             <li class="DepartmentTable">
                                 <a href="@Url.Action("Department", "Department")">Danh sách phòng ban (@ViewBag.CountRoom) </a>
                             </li>
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddProject")))
-                                {*@
                             <li class="AddDepartment">@Html.ActionLink("Thêm mới phòng ban", "AddDepartment", "Department")</li>
-                            @*}*@
                         </ul>
                     </li>
-                    @*<li class="sub-menu">
-                        <a href="javascript:;" class="Project">
-                            <i class="icon-briefcase"></i>
-                            <span>Dự án</span>
-                        </a>
-                        <ul class="sub">
-                            <li class="ProjectTable">
-                                <a href="@Url.Action("Project", "Project")">Danh sách dự án (@ViewBag.CountPr) </a>
-                            </li>
-                            <li class="AddProject">@Html.ActionLink("Thêm mới dự án", "AddProject", "Project")</li>
-                        </ul>
-                    </li>*@
                     <li class="sub-menu">
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("RepairDetails")))
-                            {*@
                         <a href="javascript:;" class="RepairDetails">
                             <i class="icon-wrench"></i>
                             <span>Sửa chữa thiết bị </span>
                         </a>
-                        @*}*@
                         <ul class="sub">
                             <li class="RepairDetailsTable"><a href="@Url.Action(  "RepairDetails", "RepairDetails")">Danh sách sửa chữa (@ViewBag.CountRepairDetails) </a></li>
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("AddRepairDetails")))
-                                {*@
                             <li class="AddRepairDetails">@Html.ActionLink("Thêm sửa chữa", "AddRepairDetails", "RepairDetails")</li>
-                            @*}*@
                             <li class="RepairType">@Html.ActionLink("Kiểu sửa chữa", "RepairType", "RepairType")</li>
                         </ul>
                     </li>
                     <li class="sub-menu">
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RequestDevice") && k.ActionName.Equals("RequestDevice")))
-                            {*@
                         <a href="javascript:;" class="RequestDevice">
                             <i class="icon-inbox"></i>
                             <span>Yêu cầu thiết bị</span>
                         </a>
-                        @*}*@
                         <ul class="sub">
                             <li class="RequestDeviceTable"><a href="@Url.Action("RequestDevice", "RequestDevice")">Danh sách yêu cầu (@ViewBag.CountRequestDevice) </a></li>
-
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RequestDevice") && k.ActionName.Equals("AddRequestDevice")))
-                                {*@
                             <li class="AddRequestDevice">@Html.ActionLink("Thêm yêu cầu", "AddRequestDevice", "RequestDevice")</li>
-                            @*}*@
                         </ul>
                     </li>
                     <li class="sub-menu">
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("ScheduleTest") && k.ActionName.Equals("ScheduleTest")))
-                            {*@
                         <a href="javascript:;" class="ScheduleTest">
                             <i class="icon-calendar"></i>
                             <span>Lịch kiểm tra thiết bị</span>
                         </a>
-                        @*}*@
                         <ul class="sub">
                             <li class="ScheduleTestTable"><a href="@Url.Action( "ScheduleTest", "ScheduleTest")">Lịch kiểm tra (@ViewBag.CountScheduleTest) </a></li>
-
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("ScheduleTest") && k.ActionName.Equals("AddScheduleTest")))
-                                {*@
                             <li class="AddScheduleTest">@Html.ActionLink("Lập lịch kiểm tra", "AddScheduleTest", "ScheduleTest")</li>
-                            @*}*@
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -159,22 +117,12 @@
                             <span>Quản lý tác vụ</span>
                         </a>
                         <ul class="sub">
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("ScanerDevice")))
-                                {*@
-                            <li class="ScanerDevice">@Html.ActionLink("Quét mã vạch", "ScanerDevice", "Device")</li>@*}*@
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("DeviceType") && k.ActionName.Equals("DeviceType")))
-                                {*@
-                            <li class="DeviceType">@Html.ActionLink("Quản lý loại thiết bị", "DeviceType", "DeviceType")</li>@*}*@
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Supplier") && k.ActionName.Equals("Supplier")))
-                                {*@
-                            <li class="Supplier">@Html.ActionLink("Quản lý nhà cung cấp", "Supplier", "Supplier")</li>@*}*@
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Employees") && k.ActionName.Equals("UserManagement")))
-                                {*@
-                            <li class="Usertable">@Html.ActionLink("Danh sách nhân viên", "UserManagement", "Employees")</li>@*}*@
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Employees") && k.ActionName.Equals("CreateUser")))
-                                {*@
+                            <li class="ScanerDevice">@Html.ActionLink("Quét mã vạch", "ScanerDevice", "Device")</li>
+                            <li class="DeviceType">@Html.ActionLink("Quản lý loại thiết bị", "DeviceType", "DeviceType")</li>
+                            <li class="Supplier">@Html.ActionLink("Quản lý nhà cung cấp", "Supplier", "Supplier")</li>
+                            <li class="Usertable">@Html.ActionLink("Danh sách nhân viên", "UserManagement", "Employees")</li>
                             <li class="CreateUser">@Html.ActionLink("Thêm nhân viên", "CreateUser", "Employees")</li>
-                            @*}*@
+                            <li class="ManagerParentChild">@Html.ActionLink("Quản lý loại TB cha-con", "ManagerTypeParent", "Device")</li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -183,49 +131,34 @@
                             <span>Báo cáo - Thống kê</span>
                         </a>
                         <ul class="sub">
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("DeviceType") && k.ActionName.Equals("StatisticalDeviceType")))
-                                {*@
-                            <li class="StatisticalDeviceType">@Html.ActionLink("Thống kê theo loại thiết bị", "StatisticalDeviceType", "DeviceType")</li>@*}*@
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("StatisticalDevice")))
-                                {*@
-                            <li class="StatisticalDevice">@Html.ActionLink("Thống kê thiết bị", "StatisticalDevice", "Device")</li>@*}*@
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("StatisticProject")))
-                                {*@
-                            <li class="StatisticProject">@Html.ActionLink("Thống kê phòng ban", "StatisticProject", "Project")</li>@*}*@
+                            <li class="StatisticalDeviceType">@Html.ActionLink("Thống kê theo loại thiết bị", "StatisticalDeviceType", "DeviceType")</li>
+                            <li class="StatisticalDevice">@Html.ActionLink("Thống kê thiết bị", "StatisticalDevice", "Device")</li>
+                            <li class="StatisticProject">@Html.ActionLink("Thống kê phòng ban", "StatisticDepartment", "Department")</li>
                         </ul>
                     </li>
-                    @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Authentication") && k.ActionName.Equals("User")))
-                        {*@
                     <li class="sub-menu">
                         <a href="javascript:;" class="RoleUser">
                             <i class="icon-user"></i>
                             <span>Quản lý người dùng</span>
                         </a>
                         <ul class="sub">
-                            @*@if (Session["CommonConstants.USER_SESSION"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("User") && k.ActionName.Equals("Index")))
-                                {*@
-                            <li>@Html.ActionLink("Danh sách người dùng", "UserIndex", "UserRole")</li> 
-                            @*}*@
-                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Authentication") && k.ActionName.Equals("Role")))
-                                {*@
-                            <li class="RoleForUserGroup">@Html.ActionLink("Phân quyền - Tính năng ", "RoleIndex", "Role")</li>@*}*@
+                            <li>@Html.ActionLink("Danh sách người dùng", "UserIndex", "UserRole")</li>
+                            <li class="RoleForUserGroup">@Html.ActionLink("Phân quyền - Tính năng ", "RoleIndex", "Role")</li>
                         </ul>
-                    </li>@*}*@
+                    </li>
                     <li class="sub-menu">
                         <a href="javascript:;" class="">
                             <i class="icon-meh"></i>
-                            @*<span> (@ViewBag.SecName) </span>*@
-                           
+                            <span> (@ViewBag.SecName) </span>
                         </a>
                         <ul class="sub">
                             @*<li class="Supplier">@Html.ActionLink("Đổi mật khẩu", "ChangePassword", "Account")</li>*@
-                            @if (1==1)
+                            @if (1 == 1)
                             {
                                 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <li class="Supplier"><a href="javascript:document.getElementById('logoutForm').submit()">Đăng Xuất</a></li>
-
                                 }
                             }
                         </ul>

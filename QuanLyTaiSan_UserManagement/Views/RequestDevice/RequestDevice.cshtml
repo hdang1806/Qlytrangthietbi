@@ -13,12 +13,9 @@
     <header class="panel-heading m-bot15 ">
         <div class="tcssPadb">
             Danh sách yêu cầu thiết bị
-            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RequestDevice") && k.ActionName.Equals("AddRequestDevice")))
-            {*@
-                <div class="btn btn-success btn-sm " style="float:right">
-                    <a href="@Url.Action("AddRequestDevice", "RequestDevice")"> Thêm </a> <i class="icon-plus"></i>
-                </div>
-            @*}*@
+            <div class="btn btn-success btn-sm " style="float:right">
+                <a href="@Url.Action("AddRequestDevice", "RequestDevice")"> Thêm </a> <i class="icon-plus"></i>
+            </div>
         </div>
     </header>
     <!--The end header-->
@@ -36,11 +33,9 @@
                         <option value="2" @(ViewBag.Status == 2 ? "selected" : "")>Bị từ chối</option>
                     </select>
                 </div>
-                <div class="col-md-3 TcssMarg">
+                <div class="col-md-3 TcssMarg" style="display:none">
                     <select class="input-sm  form-control myctr " name="Approved">
-                        <option value="" @(ViewBag.Approved == null ? "selected" : "")>Trạng thái duyệt</option>
-                        <option value="false" @(ViewBag.Approved == false ? "selected" : "")> Chưa  phê duyệt </option>
-                        <option value="true" @(ViewBag.Approved == true ? "selected" : "")> Đã phê duyệt</option>
+                        <option value="false" selected> Chưa  phê duyệt </option>
                     </select>
                 </div>
                 <div class="col-md-2 TcssMarg">
@@ -51,10 +46,7 @@
             </div>
         }
         <div class="col-md-2  row " style="text-align:right">
-            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RequestDevice") && k.ActionName.Equals("DeleteRequestDevice")))
-            {*@
-                <button class="btn btn-primary  btn-sm" type="button" href="javascript:void(0)" id="deleteItem1" onclick="ConfirmDelete1()"> Xóa tất cả mục đã chọn <i class="icon-trash"></i> </button>
-            @*}*@
+            <button class="btn btn-primary  btn-sm" type="button" href="javascript:void(0)" id="deleteItem1" onclick="ConfirmDelete1()"> Xóa tất cả mục đã chọn <i class="icon-trash"></i> </button>
         </div>
     </div>
     <!--Finish seach-->
@@ -67,14 +59,14 @@
                             <th><input type="checkbox" id="checkAll" name="check" /></th>
                             <th>Người yêu cầu</th>
                             <th>Ngày yêu cầu </th>
-                            @*<th>Ngày sử dụng</th>*@
+             
                             <th class="hidden-phone">Tên thiết bị </th>
                             <th class="hidden-phone">Kiểu thiết bị </th>
                             <th>Số lượng</th>
                             @*<th>Cấu hình</th>*@
                             <th>Chú thích</th>
                             <th>Trạng thái yêu cầu</th>
-                            <th>Trạng thái duyệt </th>
+                            @*<th>Trạng thái duyệt </th>*@
                             <th>Xem</th>
                             <th>Xóa</th>
                         </tr>
@@ -93,13 +85,10 @@
                                 @*<td>@Html.Raw(@item.Configuration)</td>*@
                                 <td style="width:10%">@item.Notes</td>
                                 <td style="width:15%">@Html.Raw(item.Status == null ? string.Empty : item.Status.Value.GetEnumDescription(typeof(eStatus.RequestDeviceStatus)))</td>
-                                <td style="width:13%">@Html.Raw(Convert.ToInt32(item.Approved).GetEnumDescription(typeof(eStatus.RequestApproved)))</td>
+                                @*<td style="width:13%">@Html.Raw(Convert.ToInt32(item.Approved).GetEnumDescription(typeof(eStatus.RequestApproved)))</td>*@
                                 <td style="width:3%" class="center"><a class="edit" href="@Url.Action("EditRequestDevice", "RequestDevice",new { Id = @item.Id})"><i class="icon-eye-open"></i></a></td>
                                 <td style="width:3%" class="center">
-                                    @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RequestDevice") && k.ActionName.Equals("DeleteRequestDevice")))
-                                    {
-                                        <a class="edit" href="javascript:void(0)" onclick="ConfirmDelete(@item.Id)"><i class="icon-trash"></i></a>
-                                    }
+                                    <a class="edit" href="javascript:void(0)" onclick="ConfirmDelete(@item.Id)"><i class="icon-trash"></i></a>
                                 </td>
                             </tr>
                         }
@@ -131,8 +120,8 @@
             //"bFilter": false,
             "aoColumnDefs": [
                 { "aTargets": [0], bSortable: false },
+                { "aTargets": [8], bSortable: false },
                 { "aTargets": [9], bSortable: false },
-                { "aTargets": [10], bSortable: false },
                 //  { "sWidth": "3%", "aTargets": [11], bSortable: false },
             ]
         });

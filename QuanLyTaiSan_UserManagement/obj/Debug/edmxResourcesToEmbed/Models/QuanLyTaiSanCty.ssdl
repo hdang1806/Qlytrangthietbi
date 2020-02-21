@@ -725,6 +725,10 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
   <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Id" Type="int" Mode="In" />
   </Function>
+  <Function Name="DeleteTypeParentTypeChild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TypeChidren" Type="int" Mode="In" />
+    <Parameter Name="TypeParent" Type="int" Mode="In" />
+  </Function>
   <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Id" Type="int" Mode="In" />
   </Function>
@@ -836,7 +840,6 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
     <Parameter Name="DeviceId" Type="int" Mode="In" />
   </Function>
   <Function Name="SearchUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="RoleId" Type="int" Mode="In" />
     <Parameter Name="status" Type="int" Mode="In" />
   </Function>
   <Function Name="SelectList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

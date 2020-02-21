@@ -4,29 +4,31 @@
 @{
     Layout = "~/Views/Share/_LayoutPage1.cshtml";
 }
+<link href="~/Content/css/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/select2.min.js"></script>
 <div class="row">
     <div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading mypanel">
                 @ViewBag.Title
                 <div class="btn-group pull-right">
-                    @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("Create")))
-                    {
+                    @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("Create")))
+                    {*@
                         <button class="btn green btn-success">
                             @Html.ActionLink("Thêm mới ", "Create", "Device", new { Id = ViewBag.type }, null)<i class="icon-plus"></i>
                         </button>
-                    }
+                    @*}*@
                 </div>
             </header>
             <div class="panel-body">
                 <div class="adv-table">
                     <div class="clearfix ">
-                        @using (Html.BeginForm("SearchDevice", "Device", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal kh" }))
+                        @using (Html.BeginForm("SearchTypeDevice", "Device", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal kh" }))
                         {
                             <div class="pull-left row col-md-12 nopadding">
                                 <div class="col-md-2 TcssMarg">
                                     <select class="form-control input-sm m-bot15 myctr" name="TypeOfDevice" id="TypeOfDevice">
-                                        <option value="0">Chọn loại thiết bị</option>
+                                       
                                         @foreach (var item in ViewData["TypeOfDevice"] as IList<DeviceType>)
                                         {
                                             <option value="@item.Id" @(ViewBag.type == @item.Id ? "selected" : "")>@item.TypeName</option>
@@ -37,7 +39,7 @@
                                     <select class="form-control input-sm m-bot15  myctr" name="Status" id="Status">
                                         <option value="-1" @(ViewBag.status == -1 ? "selected" : "")>Chọn Trạng Thái </option>
                                         <option value="0" @(ViewBag.status == 0 ? "selected" : "")>Rảnh</option>
-                                        <option value="1" @(ViewBag.status == 1 ? "selected" : "")>Đang theo dự án</option>
+                                        <option value="1" @(ViewBag.status == 1 ? "selected" : "")>Đang sử dụng</option>
                                         <option value="3" @(ViewBag.status == 3 ? "selected" : "")>Đang Bị Hỏng</option>
                                     </select>
                                 </div>
@@ -50,7 +52,7 @@
                                 </div>
                                 <div class="col-md-2 TcssMarg">
                                     <select class="form-control input-sm m-bot15 myctr" name="ProjectDKC" id="ProjectDKC">
-                                        <option value="0">Chọn dự án</option>
+                                        <option value="0">Chọn phòng ban</option>
                                         @foreach (var item in ViewData["ProjectDKC"] as IList<ProjectDKC>)
                                         {
                                             <option value="@item.Id" @( ViewBag.poject == @item.Id ? "selected" : "")>@item.ProjectName</option>
@@ -79,19 +81,19 @@
                                         Lựa chọn<i class="icon-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
-                                        @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("AddDeviceProject1")))
-                                        {
-                                            <li><a href="javascript:void(0)" onclick="Confim()">Gán các thiết bị đã chọn cho dự án</a></li>}
-                                        @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("ReturnDeviceProject")))
-                                        {
-                                            <li><a href="javascript:void(0)" onclick="ConfimReturn()">Trả các thiết bị về kho</a></li>}
+                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("AddDeviceProject1")))
+                                        {*@
+                                            <li><a href="javascript:void(0)" onclick="Confim()">Gán các thiết bị đã chọn cho dự án</a></li>@*}*@
+                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("ReturnDeviceProject")))
+                                        {*@
+                                            <li><a href="javascript:void(0)" onclick="ConfimReturn()">Trả các thiết bị về kho</a></li>@*}*@
                                         <li><a href="javascript:void(0)" id="ConfimprintImg">In Mã Vạch Các Thiết Bị Đã Chọn</a></li>
-                                        @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("LiquidationDevice")))
-                                        {
-                                            <li><a href="javascript:void(0)" onclick="Confim1()">Thanh lý các thiết bị đã chọn</a></li>}
-                                        @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("DeleteDevice")))
-                                        {
-                                            <li><a href="javascript:void(0)" id="deleteItem1" onclick="ConfirmDelete1()">Xóa các thiết bị đã chọn</a></li>}
+                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("LiquidationDevice")))
+                                        {*@
+                                            <li><a href="javascript:void(0)" onclick="Confim1()">Thanh lý các thiết bị đã chọn</a></li>@*}*@
+                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("DeleteDevice")))
+                                        {*@
+                                            <li><a href="javascript:void(0)" id="deleteItem1" onclick="ConfirmDelete1()">Xóa các thiết bị đã chọn</a></li>@*}*@
                                     </ul>
                                 </div>
                             </div>
@@ -109,13 +111,14 @@
                                     </th>
                                     <th style="width:9%">Mã</th>
                                     <th style="width:11%">Tên Thiết Bị</th>
-                                    <th>Loại</th>
+                                    <th style="width:10%">Loại</th>
                                     <th style="width:7%">Giá</th>
                                     <th style="width:10%">Người dùng</th>
-                                    <th style="width:12%">Nhà Cung Cấp</th>
+                                   
                                     <th style="width:15%">Cấu Hình</th>
-                                    <th style="width:10%">Mã Dự Án</th>
+                                    <th style="width:10%">Phòng</th>
                                     <th style="width:8%">Trạng Thái</th>
+                                    <th style="width:12%">Kiểu thiết bị</th>
                                     <th style="width:3%">Xem</th>
                                     <th style="width:3%">Xóa</th>
                                 </tr>
@@ -126,27 +129,25 @@
                                         <tr class="gradeA" id="row_@item.">
                                             <td class="center" style="width:2%"><input type="checkbox" name="check" class="form-c check" value="@item.Id" data-status="@item.Status" data-code="@item.DeviceCode" /></td>
                                             <td style="width:9%">@item.DeviceCode</td>
-                                            <td style="width:11%">
-                                                @item.DeviceName
-                                            </td>
-                                            <td>@item.TypeName</td>
-                                            <td style="text-align:right; width:7%">@item.Price</td>
+                                            <td style="width:11%"> @item.DeviceName</td>
+                                            <td style="width:11%">@item.TypeName</td>
+                                            <td style="text-align:right; width:8%">@item.PriceOne</td>
                                             <td style="width:10%">@item.FullName</td>
-                                            <td style="width:12%">@item.Name</td>
                                             <td style="width:15%">@Html.Raw(item.Configuration)</td>
-                                            <td style="width:10%">@item.ProjectSymbol</td>
-                                            <td style="width:8%">
+                                            <td style="width:5%">@item.ProjectSymbol</td>
+                                            <td style="width:10%">
                                                 @Html.Raw(Convert.ToInt32(item.Status).GetEnumDescription(typeof(eStatus.DeviceStatus)))<br />
                                                 @Html.Raw(Convert.ToInt32(item.StatusRepair).GetEnumDescription(typeof(eStatus.RepairStatus)))
                                             </td>
+                                            <td style="width:15%">@item.NameTypeComponant</td>
                                             <td class="center" style="width:3%">
                                                 <a class="edit  icon-eye-open" href="@Url.Action("EditDevice", "Device", new { Id = item.Id })"></a>
                                             </td>
                                             <td class="center" style="width:3%">
-                                                @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("DeleteDevice")))
-                                                {
+                                                @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("DeleteDevice")))
+                                                {*@
                                                     <a class="icon-trash" id="deleteItem" onclick="ConfirmDelete(@item.Id,@item.Status)"></a>
-                                                }
+                                                @*}*@
                                             </td>
                                         </tr>
                                     }}
@@ -231,4 +232,6 @@
     var a = $('#TypeDevice').val();
     $('.@ViewBag.type').addClass('active');
     $('.Device').addClass('active');
+
+    $('#ProjectDKC').select2();
 </script>

@@ -730,6 +730,10 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
         <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeleteTypeParentTypeChild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TypeChidren" Type="int" Mode="In" />
+          <Parameter Name="TypeParent" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
@@ -841,7 +845,6 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Parameter Name="DeviceId" Type="int" Mode="In" />
         </Function>
         <Function Name="SearchUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="RoleId" Type="int" Mode="In" />
           <Parameter Name="status" Type="int" Mode="In" />
         </Function>
         <Function Name="SelectList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1791,8 +1794,7 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Parameter Name="Status" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SearchUser" ReturnType="Collection(QuanLyTaiSanCtyModel.SearchUser_Result)">
-            <Parameter Name="RoleId" Mode="In" Type="Int32" />
-            <Parameter Name="status" Mode="In" Type="Int32" />
+          <Parameter Name="status" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -2085,6 +2087,10 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
             <Parameter Name="IdDv" Mode="In" Type="Int32" />
             <Parameter Name="IdUser" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="DeleteTypeParentTypeChild">
+            <Parameter Name="TypeChidren" Mode="In" Type="Int32" />
+            <Parameter Name="TypeParent" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="DeviceById_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2239,6 +2245,8 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Property Type="String" Name="PriceOne" Nullable="true" />
           <Property Type="Int32" Name="ParentId" Nullable="true" />
           <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="String" Name="NameTypeComponant" Nullable="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SearchUser_Result" >
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2249,7 +2257,6 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Property Type="String" Name="PhoneNumber" Nullable="false" />
           <Property Type="String" Name="Department" Nullable="true" />
           <Property Type="String" Name="Position" Nullable="true" />
-          <Property Type="String" Name="RoleName" Nullable="true" />
           <Property Type="String" Name="Address" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SearchProject_Result" >
@@ -2302,6 +2309,8 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Property Type="String" Name="DeviceTypeName" Nullable="true" />
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="Int32" Name="Status" Nullable="false" />
+          <Property Type="String" Name="PriceOne" Nullable="true" />
+          <Property Type="String" Name="PriceRepair" Nullable="true" />
         </ComplexType>
         <ComplexType Name="RepairDetailsAll_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2374,6 +2383,7 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Property Type="String" Name="TypeName" Nullable="false" />
           <Property Type="Int32" Name="Status" Nullable="false" />
           <Property Type="Double" Name="Price" Nullable="true" />
+          <Property Type="String" Name="PriceOne" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SearchRequestDeviceNew_Result" >
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2550,7 +2560,7 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Property Type="String" Name="DeviceCode" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="DeviceName" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="Configuration" Nullable="true" MaxLength="500" />
-          <Property Type="Double" Name="Price" Nullable="true" />
+          <Property Type="String" Name="Price" Nullable="true" />
           <Property Type="String" Name="PurchaseContract" Nullable="true" MaxLength="500" />
           <Property Type="DateTime" Name="DateOfPurchase" Nullable="true" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="true" />
@@ -3044,7 +3054,6 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Department" ColumnName="Department" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3482,6 +3491,7 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="UpdateUserDevice" FunctionName="QuanLyTaiSanCtyModel.Store.UpdateUserDevice" />
+          <FunctionImportMapping FunctionImportName="DeleteTypeParentTypeChild" FunctionName="QuanLyTaiSanCtyModel.Store.DeleteTypeParentTypeChild" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -12,12 +12,9 @@ namespace QuanLyTaiSan_UserManagement.Controllers
 {
     public class Account_App_NewController : Controller
     {
-       
-
         // GET: Account_App_New
         public ActionResult Login_New()
         {
-
             return View();
         }
 
@@ -27,7 +24,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new UserDao();
-                var result = dao.Login(model.UserName,/* Encryptor.MD5Hash(model.Password)*/model.Password);
+                var result = dao.Login(model.UserName,Encryptor.MD5Hash(model.Password)/*model.Password*/);
                 if (result == 1)
                 {
                     var user = dao.GetById(model.UserName);
@@ -37,7 +34,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
                     userSession.GroupID = user.GroupID; 
                     Session.Add(CommonConstants.USER_SESSION, userSession);
                     // List quyền của ng dùng
-                    List<string> privilegeLevelsNew = dao.GetListCredential(user.UserName);
+                    List<string> privilegeLevelsNew = dao.GetListCredential(user.UserName.Trim());
                     Session.Add(CommonConstants.SESSION_CREDENTIALS, privilegeLevelsNew);
                     return RedirectToAction("Index", "Home");
                 }

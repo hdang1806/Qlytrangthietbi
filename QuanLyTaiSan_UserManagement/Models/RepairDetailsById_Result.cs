@@ -31,5 +31,7 @@ namespace QuanLyTaiSan_UserManagement.Models
         public string DeviceTypeName { get; set; }
         public string Name { get; set; }
         public int Status { get; set; }
+        public string PriceOne { get; set; }
+        public string PriceRepair { get; set; }
     }
 }

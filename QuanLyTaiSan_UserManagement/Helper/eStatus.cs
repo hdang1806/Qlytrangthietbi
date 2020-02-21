@@ -55,10 +55,10 @@ namespace QuanLyTaiSan_UserManagement.Helper
         {
             [Description("Đang hoạt động")]
             Action = 1,
-            [Description("Tạm dừng")]
+            [Description("Dừng hoạt động")]
             Pause,
-            [Description("Kết thúc")]
-            Finish,
+            //[Description("Kết thúc")]
+            //Finish,
         }
         public enum RequestDeviceStatus
         {

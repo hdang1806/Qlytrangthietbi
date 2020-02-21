@@ -67,10 +67,10 @@
                                     @*<td class="center" style="width:2%"><input type="checkbox" class="chkCheckBoxId checkbox check" name="check" value="@item.Id" /></td>*@
                                     <td style="width:10%">@item1.DeviceCode</td>
                                     <td style="width:25%">@item1.DeviceName</td>
-                                    <td style="width:10%; text-align:right" class="hidden-phone" >@item1.Price</td>
+                                    <td style="width:10%; text-align:right" class="hidden-phone">@item1.Price</td>
                                     <td style="width:24%" class="hidden-phone">@Html.Raw(item1.Configuration)</td>
                                     <td style="width:15%" class="hidden-phone">@Html.Raw(Convert.ToInt32(item1.StatusRepair).GetEnumDescription(typeof(eStatus.RepairStatus)))</td>
-                                    <td style="width:10%" class="center" >@Html.Raw(Convert.ToInt32(item1.TypeComponant).GetEnumDescription(typeof(eStatus.Type_TypeCom))) </td>
+                                    <td style="width:10%" class="center">@Html.Raw(Convert.ToInt32(item1.TypeComponant).GetEnumDescription(typeof(eStatus.Type_TypeCom))) </td>
                                     <td style="width:3%" class="center">
                                         @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("EditProject")))
                                             {*@
@@ -202,9 +202,6 @@
     </div>
 </div>
 @*Thêm thiết bị con đồng thời thêm thiết bị mới*@
-@*@using (Html.BeginForm("CreateComponant", "Device", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal kh", @id = "formdevice" }))
-    {
-        @Html.AntiForgeryToken()*@
 <div class="modal fade lg-side Indent1" id="AddDeviceDeviceNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" style="width: auto;">
         <div class="modal-content">
@@ -212,17 +209,9 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Thêm thiết bị con</h4>
             </div>
-
             <div class="modal-body">
                 <div class="col-md-12">
                     <div class="row">
-
-                        @*<header class="panel-heading mypanel">
-                                Thêm thiết bị
-                                <div class="pull-right">
-                                    <button type="button" class="btn btn-success" ID="btnGenerate" onclick="GenBarCode()">Tạo Mã Vạch</button>
-                                </div>
-                            </header>*@
                         <div class="panel-body">
                             <div class="col-md-6">
                                 <div class="form-group m-bot15 clearfix" id="divtypeComponant">
@@ -271,7 +260,7 @@
                                                 <option value="@item.Id">@item.UserName-@item.FullName</option>
                                             }
                                         </select>
-                                      
+
                                         <span class="input-group-btn">
                                             <button class="btn btn-success icon-plus" type="button" @*onclick="CreateEmployees()"*@ style="line-height:inherit" disabled="disabled"></button>
                                         </span>
@@ -335,7 +324,7 @@
                                                 <option value="@item.Id">@item.Name</option>
                                             }
                                         </select>
-                                    
+
                                     </div>
                                 </div>
 
@@ -356,17 +345,10 @@
                                 </div>
                             </div>
                         </div>
-                        @*<div class="modal-footer" style="text-align: center">
-                                <button type="submit" class="btn btn-primary">Lưu</button>
-                                <button type="button" class="btn btn-danger">@Html.ActionLink("Hủy", "Device", "Device")</button>
-                            </div>*@
-
-
                         <input type="hidden" id="TypeHiddenComponant" name="TypeHiddenComponant" />
                         <input type="hidden" id="UserHiddenComponant" name="UserHiddenComponant" />
                         <input type="hidden" id="ProjectHiddenComponant" name="ProjectHiddenComponant" />
                         <input type="hidden" id="StatusHiddenComponant" name="StatusHiddenComponant" />
-
                     </div>
                 </div>
             </div>
@@ -378,7 +360,6 @@
         </div>
     </div>
 </div>
-@*}*@
 @*Thêm nhà cung cấp mới*@
 <div class="modal fade" id="AddSupplierComponant" tabindex="11" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -470,7 +451,7 @@
 <input type="hidden" id="hiddenTypeSympolChild" />
 <script>
     $('.SuplierSelect').select2();
-    $('.DeviceTypeComponant').select2();  
+    $('.DeviceTypeComponant').select2();
     $('.UserIdComponant').select2();
     $('#ProjectDKCComponant').select2();
     var CreateType1 = function () {
@@ -541,12 +522,10 @@
         {
             // $("#Type_TypeComponant").modal('show') ;
             var TypeParent = @Model.TypeOfDevice ;
-
             $.ajax({
                 type: "POST",
                 url: "/Device/AddTypeChidren",
                 data: {
-
                     TypeChidren: TypeChidren,
                     TypeParent: TypeParent,
                 },
@@ -571,7 +550,6 @@
     // Hiển thị danh sách thiết bị để làm thiết bị con
     var SearchDeviceComponant1 = function (TypeSymbolChildren){
         $('#SearchDvComponant tbody tr').remove() ;
-
         $("#SearchDvComponant").attr("style", "width:100%")
         //  $("#SearchDvComponant").dataTable({ "bDestroy": true});
         var TypeChildren =  TypeSymbolChildren ;
@@ -592,7 +570,7 @@
                 data = response.lst;
                 for(var i = 0  ; i< data.length ; i++ )
                 {
-                    $('#SearchDvComponant tbody').append("<tr class=" + 'gradeA' + " id=" + 'row_' + data[i].Id + "><td><input type = " + 'checkbox' + " class=" + 'check' + " name =" + 'check' + " value=" + data[i].Id + " ></td><td  class=" + 'DeviceId' + ">" +data[i].DeviceCode + "</td><td>" + data[i].DeviceName + "</td><td>" +data[i].Price + "</td><td>" + data[i].Configuration + "</td></tr>");
+                    $('#SearchDvComponant tbody').append("<tr class=" + 'gradeA' + " id=" + 'row_' + data[i].Id + "><td><input type = " + 'checkbox' + " class=" + 'check' + " name =" + 'check' + " value=" + data[i].Id + " ></td><td  class=" + 'DeviceId' + ">" +data[i].DeviceCode + "</td><td>" + data[i].DeviceName + "</td><td>" +data[i].PriceOne + "</td><td>" + data[i].Configuration + "</td></tr>");
                 }
                 // style="width:25%"
                 $("#ModalAddDvChildren").modal('show');
@@ -657,7 +635,6 @@
 
     //Thêm thiết bị con từ danh sách
     var ClickAddSC = function () {
-
         var Type_TypeCom = $('input[name=TypeCom]:checked').val();
         if (Type_TypeCom == null)
         {
@@ -669,7 +646,6 @@
             //$(".check:checked").each(function () {
             //    chkArray.push($(this).val());
             //});
-
             var table = $('#SearchDvComponant').dataTable()
             table.$('input[type="checkbox"]').each(function () {
                 if (this.checked) {
@@ -704,8 +680,6 @@
 
                             //  alert("Thêm thiết bị thành công");
                             $("#DsChildType").load(location.href + " #DsChildType>*", "");
-
-
                         } else
                         {
                             $("#ModalAddDvChildren").modal("hide");
@@ -755,16 +729,22 @@
         })
     }
     // Chọn kiểu thiết bị
-
     var CreateDeviceComponant  = function(TypeSymbolChildren) {
         $("#Type_TypeComponant").modal("show") ;
         $("#hiddenTypeSympolChild").val(TypeSymbolChildren);
-
-
     }
+
     // Thêm thiết bị con đồng thời tạo mới thiết bị
     var Add_TypeTypeComponant = function () {
         $("#Type_TypeComponant").modal("hide") ;
+
+        $("#DeviceNameComponant").val('') ;
+        $("#PriceComponant").val('') ;
+        $("#ConfigurationComponant").val('') ;
+        $("#DateOfPurchaseComponant").val('') ;
+        $("#GuaranteeComponant").val('') ;
+        $("#PurchaseContractComponant").val('') ;
+        $("#NotesdvComponant").val('') ;
         $("#AddDeviceDeviceNew").modal('show') ;
         var Type_TypeCom = $('input[name=TypeCom_New]:checked').val();
         //  var TypeChidren = $("#TypeOfDevice1").val();
@@ -791,15 +771,11 @@
             //    $("#TypeOfDeviceComponant").selected.val(TypeSymbolChildren)  ;
 
 
-            //   $("#TypeOfDeviceComponant selected").val(TypeSymbolChildren);
-
-
         }// TB ngoài
         if (Type_TypeCom == 0)
         {
             $('#UserIdComponant').removeAttr('disabled') ;
             $('#ProjectDKCComponant').removeAttr('disabled');
-
         }
 
         if (TypeSymbolChildren == 0) {
@@ -846,9 +822,7 @@
 
     var ChangeEmploys = function() {
         var userId =  $('#UserIdComponant').val() ;
-
         $("#UserHiddenComponant").val(userId) ;
-
     }
 
     var CreateSupplier = function () {
@@ -906,16 +880,11 @@
         }
         else
         {
-
-
             $.ajax({
                 type: 'POST',
                 url: '/Device/AddDeviceComponantNew',
                 contentType: "application/json",
                 data: JSON.stringify({ com : bmt }),
-                // async: false,
-                //  dataType: 'json',
-                //  contentType: "application/json; charset=utf-8",
                 success: function (result) {
                     if ( result = true ) {
                         alert("Thành công") ;
@@ -931,7 +900,6 @@
         }
 
     }
-
     //var ChangeTypeComponant = function () {
     //    var TypeOfDevice = $("#TypeOfDeviceComponant").val();
     //    if (TypeOfDevice == 0) {

@@ -15,12 +15,9 @@
             <header class="panel-heading m-bot15 ">
                 <div class="tcssPadb">
                     Danh sách thiết bị được sửa chữa
-                    @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("AddRepairDetails")))
-                    {*@
-                        <div class="btn btn-success btn-sm" style="float:right">
-                            <a href="@Url.Action("AddRepairDetails", "RepairDetails")"> Thêm </a> <i class="icon-plus"></i>
-                        </div>
-                    @*}*@
+                    <div class="btn btn-success btn-sm" style="float:right">
+                        <a href="@Url.Action("AddRepairDetails", "RepairDetails")"> Thêm </a> <i class="icon-plus"></i>
+                    </div>
                 </div>
             </header>
             <!--The end header-->
@@ -67,12 +64,8 @@
                             </div>
                         </div>
                     }
-                    <div class="col-md-2 row" style="text-align:right">
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("DeleteRepairDetails")))
-                        {*@
-                            <a class="btn btn-primary btn-sm" id="deleteItem1" onclick="ConfirmDelete1()" href="javascript:void(0)">Xóa tất cả mục đã chọn <i class="icon-trash"></i></a>
-
-                        @*}*@
+                    <div class="col-md-2 row m-bot15" style="text-align:right">
+                        <a class="btn btn-primary btn-sm" id="deleteItem1" onclick="ConfirmDelete1()" href="javascript:void(0)">Xóa tất cả mục đã chọn <i class="icon-trash"></i></a>
                     </div>
                 </div>
             </div>
@@ -89,9 +82,8 @@
                                     <th>Tên Thiết Bị </th>
                                     <th>Ngày sửa </th>
                                     <th>Địa chỉ</th>
-                                    <th>Số ngày sửa</th>
+                                    @*<th>Số ngày sửa</th>*@
                                     <th>Kiểu sửa</th>
-                                    <th>Ngày sửa tiếp</th>
                                     <th>Người sửa</th>
                                     <th>Chú thích</th>
                                     <th>Chi phí</th>
@@ -106,23 +98,18 @@
                                     <tr class="gradeA" id="row_@item.Id">
                                         <td style="width:2%" class="center"><input type="checkbox" name="check" class="form-c check checkbox " value="@item.Id" data-status="@item.Status" /></td>
                                         <td style="width:8%">@item.DeviceCode</td>
-                                        <td style="width:9%">@item.DeviceName</td>
+                                        <td style="width:12%">@item.DeviceName</td>
                                         <td style="width:8%" class="center hidden-phone">@String.Format("{0:dd/MM/yyyy}", item.DateOfRepair)</td>
-                                        <td style="width:11%" class="hidden-phone">@item.AddressOfRepair</td>
-                                        <td style="width:10%" class="center">@item.TimeOrder</td>
-                                        <td style="width:8%" class="hidden-phone">@item.TypeName</td>
-                                        <td style="width:11%" class="center hidden-phone">@String.Format("{0:dd/MM/yyyy}", item.NextDateOfRepair)</td>
-                                        <td style="width:9%" class="hidden-phone">@item.FullName</td>
+                                        <td style="width:16%" class="hidden-phone">@item.AddressOfRepair</td>
+                                        @*<td style="width:4%; text-align:right;" class="hidden-phone">@item.TimeOrder</td>*@
+                                        <td style="width:11%" class="hidden-phone">@item.TypeName</td>
+                                        <td style="width:10%" class="hidden-phone">@item.FullName</td>
                                         <td style="width:10%" class="hidden-phone">@Html.Raw(@item.Notes)</td>
-                                        <td style="text-align:right;width:6%">@item.PriceOne</td>
+                                        <td style="text-align:right;width:9%">@item.PriceOne</td>
                                         <td style="width:8%" class="center">@Html.Raw(item.Status.GetEnumDescription(typeof(eStatus.StatusRepairDevice)))</td>
                                         <td style="width:3%" class="center"><a class="edit" href="@Url.Action("EditRepairDetails", "RepairDetails",new { Id = @item.Id })"><i class="icon-eye-open"></i></a></td>
-
                                         <td style="width:3%" class="center">
-                                            @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("DeleteRepairDetailsOne")))
-                                            {
-                                                <a class="edit" href="javascript:void(0)" onclick="ConfirmDelete(@item.Id)"><i class="icon-trash"></i></a>
-                                            }
+                                            <a class="edit" href="javascript:void(0)" onclick="ConfirmDelete(@item.Id)"><i class="icon-trash"></i></a>
                                         </td>
                                     </tr>
                                 }
@@ -138,6 +125,7 @@
         </section>
     </div>
 </div>
+
 @Html.Partial("DeleteRepairDetailsPartial")
 <!--Start Scrip-->
 <script>
@@ -158,12 +146,13 @@
             "aoColumnDefs": [
                 {  "aTargets": [0], bSortable: false },
                 //{ "sWidth": "8%", "aTargets": [11] },
-                {  "aTargets": [12], bSortable: false },
-                {  "aTargets": [13], bSortable: false },
+                {  "aTargets": [10], bSortable: false },
+                {  "aTargets": [11], bSortable: false },
             ]
         });
     });
-    $('#User').select2();
+    $('#User').select2(); 
+    $('#RepairType1').select2();
     $('.RepairDetails').addClass('active');
     $('.RepairDetailsTable').addClass('active');
 </script>

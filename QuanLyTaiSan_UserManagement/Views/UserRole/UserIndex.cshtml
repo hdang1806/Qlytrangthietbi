@@ -11,12 +11,10 @@
             <header class="panel-heading mypanel">
                 Quản Lý Người Dùng
                 <div class="btn-group pull-right">
-                    @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Account") && k.ActionName.Equals("Register")))
-                        {*@
                     <button class="btn green btn-success" data-toggle="modal" data-target="#registerModal" onclick="registerModal()">
                         Thêm Mới<i class="icon-plus"></i>
                     </button>
-                    @*}*@
+
                 </div>
             </header>
             <div class="panel-body">
@@ -42,17 +40,10 @@
                                         <td>@item.RoleGroupID</td>
                                         <td>@item.RoleGroupName</td>
                                         <td class="center">
-                                            @*@if (Session["AuthenticationFeature"] !=null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("User") && k.ActionName.Equals("ChangeRoleByUserId")))
-                                                {*@
                                             <a class="EditUserLogin icon-pencil" href="#" data-id="@item.Username"></a>
-                                            @*}*@
                                         </td>
                                         <td class="center">
-                                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("User") && k.ActionName.Equals("DeleteUser")))
-                                                {*@
                                             <a class="delete icon-trash" href="#" id="deleteItem" data-id="@item.Id"></a>
-                                            @*}*@
-
                                         </td>
                                     </tr>
                                 }
@@ -159,7 +150,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display:none">
                         <label class="col-md-4 control-label">Mật khẩu</label>
                         <div class="col-md-8">
                             <input class="form-control" id="PasswordEdit" required autocomplete="off" />
@@ -172,7 +163,7 @@
                 <button data-dismiss="modal" class="btn btn-default" type="button">Hủy</button>
 
             </div>
-          
+
         </div>
     </div>
 </div>
@@ -185,7 +176,7 @@
             </div>
             <div class="modal-body">
                 Bạn có muốn xóa người dùng?
-              
+
             </div>
             <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="button">Hủy</button>
@@ -202,9 +193,8 @@
         $('#ToastCheckNullPass').hide();
         $('#ToastCheckNullName').hide();
     }
-
+    //Thêm người dùng
     $(".Create").click(function (e) {
-
         var FullName = $('#FullName').val().trim();
         var Role = $('#Role').val().trim();
         var Username = $('#Username').val().trim();
@@ -216,7 +206,6 @@
         else if (Password == "" || Password == null) {
             $('#ToastCheckNullPass').show();
             $('#ToastCheckNullName').hide();
-
         }
         else {
             $.ajax({
@@ -232,23 +221,22 @@
                 }
             });
         }
-
     })
-
+    //Sửa thông tin người dùng
     $(".EditUserLogin").click(function (e) {
         e.preventDefault();
         var id = $(this).attr('data-id');
         //  var roleId = $(this).attr('data-role-id');
-        $('#EditregisterModal').modal('show');
-
         $.ajax({
-            type: "POST",
+            type: 'GET',
+            dataType: 'json',
             url: "/UserRole/GetInfoAccount",
             data: { userId: id },
             success: function (response) {
-                if (response.result = true) {
+                // var a = response.result;
+                var data = response.lstInfo;
+                if (data != null) {
                     $('#EditregisterModal').modal('show');
-                    var data = response.lstInfo;
                     $('#FullNameEdit').val(data.FullName.trim());
                     $('#UsernameEdit').val(data.UserName.trim());
                     $('#RoleEdit').val(data.GroupID.trim());
@@ -262,7 +250,7 @@
         });
     });
 
-
+  
     $("#btnConfirmEdit").click(function () {
         var ID = $('#HiddenUserIdRole').val().trim();
         var FullNameEdit = $('#FullNameEdit').val().trim();
@@ -293,9 +281,7 @@
             });
         }
     });
-
-
-
+    //Xóa thông tin người dùng
     $(".delete").click(function () {
         var id = $(this).attr('data-id');
         $('#deleteModal').modal('show');

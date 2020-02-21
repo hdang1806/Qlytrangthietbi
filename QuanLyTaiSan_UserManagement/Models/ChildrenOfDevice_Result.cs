@@ -17,7 +17,7 @@ namespace QuanLyTaiSan_UserManagement.Models
         public string DeviceCode { get; set; }
         public string DeviceName { get; set; }
         public string Configuration { get; set; }
-        public Nullable<double> Price { get; set; }
+        public string Price { get; set; }
         public string PurchaseContract { get; set; }
         public Nullable<System.DateTime> DateOfPurchase { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

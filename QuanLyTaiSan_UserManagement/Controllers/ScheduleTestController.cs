@@ -8,14 +8,13 @@ using QuanLyTaiSan_UserManagement.Models;
 
 namespace QuanLyTaiSan_UserManagement.Controllers
 {
- //   [Authorize]
-   // [AuthorizationHandler]
+
     public class ScheduleTestController : Controller
     {
-        // GET: ScheduleTest
+
         QuanLyTaiSanCtyEntities Ql = new QuanLyTaiSanCtyEntities();
 
-      //  [AuthorizationViewHandler]
+
         public ActionResult ScheduleTest()
         {
             ViewData["User"] = Ql.Users.ToList();
@@ -37,7 +36,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             ViewBag.Status = Status;
             return View("ScheduleTest", lstScheduleTest);
         }
-      //  [AuthorizationViewHandler]
+
         public ActionResult AddScheduleTest()
         {
             ViewData["Devices"] = Ql.Devices.Where(x=> x.IsDeleted != true).ToList();
@@ -81,7 +80,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return RedirectToAction("EditScheduleTest", "ScheduleTest");
 
         }
-      //  [AuthorizationViewHandler]
+
         public JsonResult DeleteScheduleTest(string Id)
         {
             string a = "," + Id + ",";

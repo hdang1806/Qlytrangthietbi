@@ -3,8 +3,6 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Share/_LayoutPage1.cshtml";
 }
-
-
 <div class="panel">
     <div class="col-lg-12" id="LoadUserGroup">
         <section class="panel">
@@ -68,7 +66,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <a id="btnLiquidation" class="btn btn-warning" onclick="AddUserGroup()">Thêm</a>
+                    <a id="btnLiquidation" href="#" class="btn btn-warning" onclick="AddUserGroup()">Thêm</a>
                     <button data-dismiss="modal" class="btn btn-default" type="button">Hủy</button>
 
                 </div>
@@ -181,7 +179,6 @@
 
     });
 
-
     // Thêm nhóm quyền
     var AddRole = function () {
         $("#AddUserGroupModal").modal("show");
@@ -212,7 +209,6 @@
                     else {
                         alert("Mã nhóm quyền đã tồn tại");
                     }
-
                 }
 
             })
@@ -240,7 +236,7 @@
                     $("#LoadUserGroup").load(location.href + " #LoadUserGroup>*", "")
                 }
                 else {
-                    alert("Nhóm quyền vẫn còn quyền  ");
+                    alert("Nhóm quyền vẫn còn quyền || Còn người sử dụng nhóm quyền  ");
                     $("#DeleteUserGroupModal").modal("hide");
                 }
 
@@ -252,7 +248,6 @@
 
     //Thêm quyền cho nhóm quyền
     var AddRollClick = function (ID) {
-
         var GroupID = ID;
         $("#IdAddRoleHidden").val(ID);
 
@@ -285,7 +280,7 @@
             $('input[type="checkbox"]', this).prop('checked', false);
         })
     }
-    // Xác nhận thêm quyền
+    // Xác nhận thêm quyền cho nhóm quyền
     var ConfirmAddRole = function () {
         var chkArray = [];
         var table = $('#exampleRole').dataTable()

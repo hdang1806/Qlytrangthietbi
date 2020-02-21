@@ -84,7 +84,7 @@ namespace QuanLyTaiSan_UserManagement.Common
         //}
         public List<string> GetListCredential(string userName)
         {
-            var user = db.Users.Single(x => x.UserName == userName);
+            var user = db.UserLogins.Single(x => x.UserName == userName);
             var data = (from a in db.Credentials
                         join b in db.UserGroups on a.UserGroupID equals b.ID
                         join c in db.Roles on a.RoleID equals c.ID
@@ -206,8 +206,11 @@ namespace QuanLyTaiSan_UserManagement.Common
         public bool DeleteUserGroup(string ID)
         {
             bool a = true;
+            // Kiểm tra nhóm quyền chứa quyền nào ko ?
             var Check = db.Credentials.Where(x => x.UserGroupID == ID).Count();
-            if (Check > 0)
+            // Kiểm tra người dùng còn sử dụng nhóm quyền ko ?
+            var Check_1 = db.UserLogins.Where(x => x.GroupID == ID ).Count(); 
+            if (Check > 0 || Check_1 > 0)
             {
                 a = false;
             }
@@ -262,11 +265,10 @@ namespace QuanLyTaiSan_UserManagement.Common
         public bool UpdateRole(int ID,string FullName, string UserName, string Role, string PassWord)
         {
             bool result = true;
-       
                 var user = db.UserLogins.Find(ID);
                  user.FullName = FullName;
                 user.GroupID = Role;
-                user.PassWord = PassWord; 
+               //user.PassWord = PassWord; 
                 db.SaveChanges();
             return result;
         }

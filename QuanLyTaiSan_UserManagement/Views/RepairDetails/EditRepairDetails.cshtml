@@ -53,7 +53,7 @@
                             <label>Giá thiết bị </label>
                         </div>
                         <div class="col-md-8">
-                            <input readonly="" type="text" class="form-control myctr  " size="16" name="Price" id="Price" value="@Model.Price" autocomplete="off" />
+                            <input readonly="" type="text" class="form-control myctr  " size="16" name="PriceDv" id="PriceDv" value="@Model.PriceOne" autocomplete="off" />
                         </div>
                     </div>
                 </div>
@@ -91,15 +91,10 @@
                     <div class="tcssLeft">
                         <button class="btn btn-white  marleft" id="Cancel" type="reset">Hủy</button>
                         <button class="btn btn-white  marleft" id="Cancel2" type="reset">Hủy</button>
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("EditRepairDetails")))
-                        {*@
-                            <button type="button" class="btn btn-primary btn-large" id="CompleteRepair">Đã sửa xong</button>
-                        @*}*@
+                        <button type="button" class="btn btn-primary btn-large" id="CompleteRepair">Đã sửa xong</button>
                         <button type="submit" class="btn btn-primary btn-large" id="Save">Lưu</button>
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("EditRepairDetails")))
-                        {*@
-                            <button type="button" class="btn btn-warning btn-large" id="Edit">Sửa</button>
-                        @*}*@
+                        <button type="button" class="btn btn-warning btn-large" id="Edit">Sửa</button>
+
                     </div>
                 </header>
                 <!--The end Button-->
@@ -169,12 +164,9 @@
                                         <option value="@item.Id" @( Model.TypeOfRepair == @item.Id ? "selected" : "" )>@item.TypeName</option>
                                     }
                                 </select>
-                                @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairType") && k.ActionName.Equals("AddRepairType")))
-                                {*@
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success icon-plus" onclick="CreateType()" type="button" style="line-height:inherit"></button>
-                                    </span>
-                                @*}*@
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success icon-plus" onclick="CreateType()" type="button" style="line-height:inherit"></button>
+                                </span>
                             </div>
                         </div>
                         <div class="form-group m-bot15 clearfix">
@@ -182,7 +174,7 @@
                                 <label>Chi phí</label>
                             </div>
                             <div class="col-md-8">
-                                <input class="form-control  myctr" type="number" value="@Model.Price" name="Prices" id="Prices" autocomplete="off" required>
+                                <input class="form-control  myctr" style="text-align:right" value="@Model.PriceRepair" name="Prices" id="Prices" autocomplete="off" required onkeyup="FormatNumber(this)">
                             </div>
                         </div>
                         <div class="form-group m-bot15 clearfix">
@@ -190,8 +182,7 @@
                                 <label>Số ngày sửa</label>
                             </div>
                             <div class="col-md-8 clearfix input-group">
-                                <input class="form-control  myctr" type="number" value="@Model.TimeOrder" name="TimeOrder" id="TimeOrder" autocomplete="off">
-
+                                <input class="form-control myctr" style="text-align:right" type="number" value="@Model.TimeOrder" name="TimeOrder" id="TimeOrder" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-group m-bot15 clearfix">
@@ -205,7 +196,6 @@
                         <div class="form-group m-bot15 clearfix">
                             <div class="col-md-4">
                                 <label>Ngày sửa tiếp</label>
-
                             </div>
                             <div class="col-md-8 clearfix input-group">
                                 <input type="text" class="form-control myctr form-control-inline input-medium default-date-picker" value="@String.Format("{0:yyyy-MM-dd}", Model.NextDateOfRepair)" size="16" name="NextDateOfRepair" id="NextDateOfRepair" autocomplete="off" />
@@ -226,10 +216,7 @@
                     <a class="styletext"> Lịch sử sửa chữa của thiết bị</a>
                 </div>
                 <div class="col-md-2" style="text-align:right">
-                    @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("DeleteRepairDetails")))
-                {*@
-                        <button class="btn btn-primary  btn-sm" href="javascript:void(0)" type="button" id="deleteItem1" onclick="ConfirmDelete1()">Xóa tất cả mục đã chọn <i class="icon-trash"></i> </button>
-                    @*}*@
+                    <button class="btn btn-primary  btn-sm" href="javascript:void(0)" type="button" id="deleteItem1" onclick="ConfirmDelete1()">Xóa tất cả mục đã chọn <i class="icon-trash"></i> </button>
                 </div>
             </div>
         </header>
@@ -259,17 +246,14 @@
                                 <td><input type="checkbox" name="check" id="check" class="check checkbox " value="@item.Id" data-status="@item.Id" /></td>
                                 <td>@item.DeviceCode</td>
                                 <td>@item.TypeName</td>
-                                <td>@String.Format("{0:dd-MM-yyyy}", item.DateOfRepair)</td>
-                                <td>@item.TimeOrder</td>
+                                <td style="text-align:center">@String.Format("{0:dd-MM-yyyy}", item.DateOfRepair)</td>
+                                <td style="text-align:right">@item.TimeOrder</td>
                                 <td>@item.FullName</td>
                                 <td>@item.AddressOfRepair</td>
-                                 <td>@item.Price</td>
+                                <td style="text-align:right">@item.PriceOne</td>
                                 <td class="hidden-phone">@Html.Raw(@item.Notes)</td>
                                 <td class="center">
-                                    @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("RepairDetails") && k.ActionName.Equals("DeleteRepairDetailsOne")))
-                                    {*@
-                                        <a class="" onclick="ConfirmDelete(@item.Id)" href="javascript:void(0)"><i class="icon-trash"></i></a>
-                                    @*}*@
+                                    <a class="" onclick="ConfirmDelete(@item.Id)" href="javascript:void(0)"><i class="icon-trash"></i></a>
                                 </td>
                             </tr>
                         }
@@ -283,6 +267,7 @@
     <!--The end table-->
     }
 </section>
+<script src="~/Common/ScriptCommon.js"></script>
 @Html.Partial("~/Views/RepairDetails/DeleteHistoryPartial.cshtml")
 <!--Add type Repair-->
 <div class="modal fade" id="AddType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -316,6 +301,7 @@
 <!--End-->
 <!--Start Script-->
 <script>
+    $("#TypeOfRepair").select2();
 </script>
 <script>
     $(document).ready(function () {

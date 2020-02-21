@@ -10,7 +10,6 @@
 @*Chia Tab*@
 
 <section class="panel">
-  
                 <div class="row">
                     <div class="col-lg-12">
                         <section class="panel">
@@ -80,10 +79,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group m-bot15 clearfix" id="Project">
-                                            <label class="control-label col-md-4 ">Dự Án || Phòng</label>
+                                            <label class="control-label col-md-4 ">Phòng</label>
                                             <div class="col-md-8 input-group">
                                                 <select class="form-control myctr projectid" name="ProjectDKC" id="ProjectDKC" onchange="ChangePRJ()">
-                                                    <option value="0">Chọn dự án ||Phòng ban </option>
+                                                    <option value="0">Chọn Phòng ban </option>
                                                     @foreach (var item in ViewData["ProjectDKC"] as IList<ProjectDKC>)
                                                     {
                                                         <option value="@item.Id">@item.ProjectName</option>
@@ -97,7 +96,7 @@
                                                 <select class="form-control myctr" name="Status">
                                                     <option value="0" selected>Rảnh</option>
                                                     <option value="3">Đang Bị Hỏng</option>
-                                                    <option value="1" disabled>Đang trong dự án</option>
+                                                    <option value="1" disabled>Đang trong phòng ban</option>
                                                 </select>
                                             </div>
                                         </div>

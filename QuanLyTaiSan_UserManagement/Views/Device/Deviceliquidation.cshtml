@@ -15,10 +15,7 @@
                         Lựa chọn<i class="icon-angle-down"></i>
                     </button>
                     <ul class="dropdown-menu pull-right">
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("DeleteDevice")))
-                        {*@
                             <li><a href="javascript:void(0)" id="deleteItem1" onclick="ConfirmDelete1()">Xóa các thiết bị đã chọn</a></li>
-                        @*}*@
                         <li><a href="javascript:void(0)" id="ConfimprintImg">In Mã Vạch Các Thiết Bị Đã Chọn</a></li>
                     </ul>
                 </div>
@@ -68,10 +65,7 @@
                                                 <a class="edit  icon-eye-open" href="@Url.Action("EditDevice", "Device", new { Id = item.Id })"></a>
                                             </td>
                                             <td class="center" style="width:3%">
-                                                @if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("DeleteDevice")))
-                                                {
                                                     <a class="icon-trash" id="deleteItem" onclick="ConfirmDelete(@item.Id,@item.Status)"></a>
-                                                }
                                             </td>
                                         </tr>
                                     }}

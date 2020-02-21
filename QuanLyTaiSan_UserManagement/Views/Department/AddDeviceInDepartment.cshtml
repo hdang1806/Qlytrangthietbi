@@ -45,8 +45,8 @@
                         <div class="col-md-2 tcssPadR0">
                             <div class="btn-group tcssLeft">
                                 @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceProjectAll")))
-                                {*@
-                                    <button type="button" class="btn btn-primary btn-sm" href="javascript:void(0)" onclick="AddDeviceInProjectAll()"> Thêm tất cả thiết bị đã chọn <i class="icon-plus"></i></button>
+                                    {*@
+                                <button type="button" class="btn btn-primary btn-sm" href="javascript:void(0)" onclick="AddDeviceInProjectAll()"> Thêm tất cả thiết bị đã chọn <i class="icon-plus"></i></button>
                                 @*}*@
                             </div>
                         </div>
@@ -67,7 +67,8 @@
                                     <th>Loại thiết bị</th>
                                     <th>Cấu hình</th>
                                     <th>Trạng thái</th>
-                                    <th>Thêm vào Phòng </th>
+                                    <th>Kiểu thiết bị </th>
+                                    <th>Thêm </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,14 +78,13 @@
                                         <td style="width:2%"><input type="checkbox" name="check" class="check" value="@item.Id" /></td>
                                         <td style="width:12%"> @item.DeviceCode</td>
                                         <td style="width:20%">@item.DeviceName</td>
-                                        <td style="width:18%">@item.TypeName</td>
-                                        <td style="width:25%">@Html.Raw(@item.Configuration)</td>
+                                        <td style="width:15%">@item.TypeName</td>
+                                        <td style="width:20%">@Html.Raw(@item.Configuration)</td>
                                         <td style="width:10%" class="center hidden-phone">@Html.Raw(Convert.ToInt32(item.Status).GetEnumDescription(typeof(eStatus.DeviceStatus)))</td>
-                                        <td style="width:13%" class="center">
-                                            @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceInProject1")))
-                                            {*@
-                                                <a class="" href="javascript:void(0)" onclick="ConfirmAdd(@item.Id)"><i class="icon-plus"></i></a>
-                                            @*}*@
+                                        <td style="width:16%" class="center">@item.NameTypeComponant </td>
+                                        <td style="width:5%" class="center">
+                                            <a class="" href="javascript:void(0)" onclick="ConfirmAdd(@item.Id)"><i class="icon-plus"></i></a>
+                            
                                         </td>
                                     </tr>
                                 }
@@ -95,10 +95,7 @@
                 </div>
                 <div class="col-md-12 form-group ">
                     <div style="text-align:center">
-                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceProjectAll")))
-                        {*@
-                            <button type="button" class="btn btn-primary btn-large" href="javascript:void(0)" onclick="AddDeviceInProjectAll()"> Thêm </button>
-                        @*}*@
+                        <button type="button" class="btn btn-primary btn-large" href="javascript:void(0)" onclick="AddDeviceInProjectAll()"> Thêm </button>
                         <a class="btn btn-white" href="@Url.Action("EditDepartment","Department",new {id = Model.Id})">Hủy</a>
                     </div>
                 </div>
@@ -151,7 +148,7 @@
             //"bLengthChange": false,
             //"bFilter": false,
             "aoColumnDefs": [
-                { "aTargets": [0], bSortable: false },     
+                { "aTargets": [0], bSortable: false },
                 {  "aTargets": [6], bSortable: false },
             ]
         });

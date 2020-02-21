@@ -8,34 +8,28 @@ using QuanLyTaiSan_UserManagement.Models;
 
 namespace QuanLyTaiSan_UserManagement.Controllers
 {
-  //  [Authorize]
-   // [AuthorizationHandler]
+
     public class EmployeesController : Controller
     {
         QuanLyTaiSanCtyEntities data = new QuanLyTaiSanCtyEntities();
-        // GET: User
-      //  [AuthorizationViewHandler]
+
         public ActionResult UserManagement()
         {
-            ViewData["Role"] = data.Roles.ToList();
-            var lstUser = data.SearchUser(null, null).ToList();
+            var lstUser = data.SearchUser( null).ToList();
             return View(lstUser);
         }
         [HttpPost]
         public ActionResult SearchUser(FormCollection collection)
         {
-            ViewData["Role"] = data.Roles.ToList();
             int Status = Convert.ToInt32(collection["Status"]);
             ViewBag.status = Status;
-            var charts = data.SearchUser(null,Status).ToList();
+            var charts = data.SearchUser(Status).ToList();
             var model = charts.ToList();
             return View("UserManagement", model);
         }
-   //     [AuthorizationViewHandler]
+
         public ActionResult CreateUser()
         {
-
-            ViewData["Role"] = data.Roles.ToList();
             return View();
         }
         [HttpPost]
@@ -52,10 +46,10 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             data.AddUser(UserName, null, FullName, Email, PhoneNumber, Address, Department, Position, null, 0);
             return RedirectToAction("UserManagement", "Employees");
         }
-    //    [AuthorizationHandler]
+
         public ActionResult DetailUser(int Id)
         {
-            ViewData["Role"] = data.Roles.ToList();
+        
             return View(data.Users.Find(Id));
         }
         [HttpPost]
@@ -91,7 +85,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             else result = false;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-   //     [AuthorizationViewHandler]
+
         public ActionResult Role()
         {
             ViewData["Role"] = data.Roles.ToList();

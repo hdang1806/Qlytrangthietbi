@@ -21,7 +21,6 @@ namespace QuanLyTaiSan_UserManagement.Models
         public string PhoneNumber { get; set; }
         public string Department { get; set; }
         public string Position { get; set; }
-        public string RoleName { get; set; }
         public string Address { get; set; }
     }
 }

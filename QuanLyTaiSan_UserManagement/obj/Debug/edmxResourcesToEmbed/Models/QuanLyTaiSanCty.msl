@@ -342,7 +342,6 @@
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="Department" ColumnName="Department" />
           <ScalarProperty Name="Position" ColumnName="Position" />
-          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -780,5 +779,6 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="UpdateUserDevice" FunctionName="QuanLyTaiSanCtyModel.Store.UpdateUserDevice" />
+    <FunctionImportMapping FunctionImportName="DeleteTypeParentTypeChild" FunctionName="QuanLyTaiSanCtyModel.Store.DeleteTypeParentTypeChild" />
   </EntityContainerMapping>
 </Mapping>

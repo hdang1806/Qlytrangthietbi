@@ -104,7 +104,7 @@
                                         <td>@item.Price</td>
                                         <td>@item.FullName</td>
                                         <td>@Html.Raw(item.Configuration)</td>
-                                        <td>@Html.Raw(item.Status.GetEnumDescription(typeof(eStatus.DeviceStatus)))</td>
+                                        <td>@Html.Raw(Convert.ToInt32(item.Status).GetEnumDescription(typeof(eStatus.DeviceStatus)))</td>
                                         <td class="center"><a class="edit icon-eye-open" href="@Url.Action("EditDevice", "Device",new {Id = item.Id})"></a></td>
                                     </tr>
                                 }

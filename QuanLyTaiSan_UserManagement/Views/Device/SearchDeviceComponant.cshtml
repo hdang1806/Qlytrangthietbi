@@ -1,5 +1,7 @@
 ﻿@model QuanLyTaiSan_UserManagement.Models.DeviceById_Result
 @using QuanLyTaiSan_UserManagement.Models
+
+@*Danh sách Thiết bị con từ Danh sách thiết bị có sẵn*@ 
 <div class="modal fade" id="ModalAddDvChildren" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -18,7 +20,6 @@
                                     <th>Tên thiết bị </th>
                                     <th>Giá</th>
                                     <th>Cấu hình</th>
-                                  
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -35,26 +36,6 @@
     </div>
 </div>
 <script>
-
-        //$('#SearchDvComponant').dataTable({
-        //    "oLanguage": {
-        //        "sInfo": "Hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-        //        "sSearch": "Tìm Kiếm",
-        //        "oPaginate": {
-        //            "sPrevious": "Trước",
-        //            "sNext": "Tiếp",
-        //        }
-        //    },
-        //    "iDisplayLength": 2,
-        //    //"bLengthChange": false,
-        //    "bFilter": true,
-        //    //"aoColumnDefs": [
-        //    //    { "aTargets": [0], bSortable: false },
-        //    //    { "aTargets": [9], bSortable: false },
-        //    //    { "aTargets": [10], bSortable: false },
-        //    //]
-        //});
-   
     var ClickCancleSC = function () {
         var dataTable = $('#SearchDvComponant').DataTable();
         //Xóa dữ liệu cũ của Table

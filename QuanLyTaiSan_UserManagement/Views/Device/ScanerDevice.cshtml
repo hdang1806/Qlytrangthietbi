@@ -24,15 +24,9 @@
                                 Lựa chọn<i class="icon-angle-down"></i>
                             </button>
                             <ul class="dropdown-menu pull-right">
-                                @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("AddDeviceProject1")))
-                                {*@
-                                    <li><a href="javascript:void(0)" onclick="Confim()">Gán các thiết bị đã chọn cho dự án</a></li>@*}*@
-                                @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("ReturnDeviceProject")))
-                                {*@
-                                    <li><a href="javascript:void(0)" onclick="ConfimReturn()">Trả các thiết bị về kho</a></li>@*}*@
-                                @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("LiquidationDevice")))
-                                {*@
-                                    <li><a href="javascript:void(0)" onclick="Confim1()">Thanh lý các thiết bị đã chọn</a></li>@*}*@
+                                    <li><a href="javascript:void(0)" onclick="Confim()">Gán các thiết bị đã chọn cho dự án</a></li>
+                                    <li><a href="javascript:void(0)" onclick="ConfimReturn()">Trả các thiết bị về kho</a></li>
+                                    <li><a href="javascript:void(0)" onclick="Confim1()">Thanh lý các thiết bị đã chọn</a></li>
                                 <li><a href="javascript:void(0)" id="ConfimprintImg">In Mã Vạch Các Thiết Bị Đã Chọn</a></li>
                             </ul>
                         </div>

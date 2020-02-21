@@ -15,44 +15,43 @@ namespace QuanLyTaiSan_UserManagement.Controllers
 {
     // [Authorize]
     // [AuthorizationHandler]
-   // [HasCredential(RoleID = "")]
+    // [HasCredential(RoleID = "")]
     public class DepartmentController : Controller
     {
         QuanLyTaiSanCtyEntities Ql = new QuanLyTaiSanCtyEntities();
-
-        //   public object BarCodeReadType { get; private set; }
-
-        //  [AuthorizationViewHandler]
+        [HasCredential(RoleID = "VIEW_DEPARTMENT")]
         public ActionResult Department()
         {
-            ViewBag.ProjectNb = Ql.SearchProject(null, null,1, null).Count();
-            ViewData["User"] = Ql.Users.ToList();
-            var lstProject = Ql.SearchProject(null, null,1, null).ToList();
+            ViewBag.ProjectNb = Ql.SearchProject(null, null, 1, null).Count();
+            ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted == false).ToList();
+            var lstProject = Ql.SearchProject(null, null, 1, null).ToList();
             return View(lstProject);
         }
         [HttpPost]
         public ActionResult SeachDepartment(FormCollection colection, ProjectDKC Project)
         {
-            ViewData["User"] = Ql.Users.ToList();
+            ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted == false).ToList();
             String ProjectSymbol = colection["ProjectSymbol"].Trim();
             //   int? Status = colection["Status"].Equals("0") ? (int?)null : Convert.ToInt32(colection["Status"]);
             int? ManagerProject = colection["ManagerProject"].Equals("0") ? (int?)null : Convert.ToInt32(colection["ManagerProject"]);
-            var lstProject = Ql.SearchProject(ManagerProject, null,1, ProjectSymbol).ToList();
+            var lstProject = Ql.SearchProject(ManagerProject, null, 1, ProjectSymbol).ToList();
             var ViewProject = lstProject;
             // ViewBag.Status = Status;
             ViewBag.ManagerProject = ManagerProject;
             ViewBag.ProjectSymbol = ProjectSymbol;
-            ViewBag.ProjectNb = Ql.SearchProject(ManagerProject, null,1, ProjectSymbol).Count();
+            ViewBag.ProjectNb = Ql.SearchProject(ManagerProject, null, 1, ProjectSymbol).Count();
             return View("Department", ViewProject);
         }
         //  [AuthorizationViewHandler]
+        [HasCredential(RoleID = "ADD_DEPARTMENT")]
         public ActionResult AddDepartment()
         {
-            ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted != true).ToList();
+            ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted == false).ToList();
             return View();
         }
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "ADD_REPAIR_DEVICE")]
         public JsonResult AddRepairType(string TypeName, string Notes)
         {
             Ql.AddRepairType(TypeName, Notes);
@@ -61,6 +60,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         }
 
         [HttpPost]
+        [HasCredential(RoleID = "ADD_DEPARTMENT")]
         public ActionResult AddDepartment(FormCollection colection, ProjectDKC Project)
         {
 
@@ -83,7 +83,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
                 // ViewBag.FromDate = @String.Format("{0:yyyy-MM-dd}", FromDate);
                 //  ViewBag.ToDate = @String.Format("{0:yyyy-MM-dd}", ToDate);
                 //  ViewBag.Status = Status;
-                ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted != true).ToList();
+                ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted == false).ToList();
                 return View();
             }
             else
@@ -93,6 +93,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             }
         }
         // [AuthorizationViewHandler]
+        [HasCredential(RoleID = "EDIT_DEPARTMENT")]
         public ActionResult EditDepartment(int Id)
         {
             var lstType = Ql.DeviceTypes.ToList();
@@ -107,11 +108,12 @@ namespace QuanLyTaiSan_UserManagement.Controllers
                 map.Add(typeName, i.Count());
             }
             ViewData["CountingDeviceType"] = map;
-            ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted != true).ToList();
+            ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted == false).ToList();
             return View(Ql.ProjectDKCs.Find(Id));
         }
 
         [HttpPost]
+        [HasCredential(RoleID = "EDIT_DEPARTMENT")]
         public ActionResult EditDepartment(FormCollection colection, ProjectDKC Project)
         {
             int? Id = colection["Id"].Equals("0") ? (int?)null : Convert.ToInt32(colection["Id"]);
@@ -123,13 +125,14 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             //  DateTime? ToDate = colection["ToDate"].Equals("") ? (DateTime?)null : Convert.ToDateTime(colection["ToDate"]);
             DateTime? CreatedDate = colection["CreatedDate"].Equals("") ? (DateTime?)null : Convert.ToDateTime(colection["CreatedDate"]);
             DateTime ModifiedDate = Convert.ToDateTime(colection["ModifiedDate"]);
-            //  int? Status = colection["Status"].Equals("0") ? (int?)null : Convert.ToInt32(colection["Status"]);
+            int? Status = colection["Status"].Equals("0") ? (int?)null : Convert.ToInt32(colection["Status"]);
             bool IsDeleted = Convert.ToBoolean(colection["IsDeleted"]);
-            Ql.UpdateProject(Id, ProjectSymbol, ProjectName, ManagerProject, Address, null, null, CreatedDate, ModifiedDate, 4, IsDeleted);
+            Ql.UpdateProject(Id, ProjectSymbol, ProjectName, ManagerProject, Address, null, null, CreatedDate, ModifiedDate, Status, IsDeleted);
             return RedirectToAction("EditDepartment", "Department");
         }
 
         //  [AuthorizationViewHandler]
+        [HasCredential(RoleID = "DELETE_DEPARTMENT")]
         public JsonResult DeleteDepartment(string Id)
         {
             bool checkIsset = true;
@@ -159,6 +162,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //   [AuthorizationViewHandler]
+        [HasCredential(RoleID = "DELETE_DEPARTMENT")]
         public JsonResult DeleteDepartment1(int Id)
         {
             bool result = false;
@@ -176,6 +180,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //  [AuthorizationViewHandler]
+        [HasCredential(RoleID = "ADD_DEVICEINPROJECT")]
         public ActionResult AddDeviceInDepartment(int Id, int DeviceType)
         {
             ViewData["DeviceType"] = Ql.DeviceTypes.ToList();
@@ -202,46 +207,122 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return View(Ql.ProjectDKCs.Find(Id));
         }
         //   [AuthorizationViewHandler]
+        [HasCredential(RoleID = "ADD_DEVICEINPROJECT")]
         public ActionResult AddDeviceInDepartment1(int Idpr, int Iddv, String Notes)
         {
-            bool result = false;
-            int checkdele = Ql.AddDeviceOfProject(Idpr, Iddv, Notes);
-            if (checkdele > 0)
-                result = true;
+            bool result = true;
+            //Check xem thiết bị có phải là thiết bị con nằm trong
+            var Check = Ql.DeviceDevices.Where(x => x.DeviceCodeChildren == Iddv & x.IsDeleted == false & x.TypeComponant == 1).Select(x => x.DeviceCodeChildren).Count();
+            if (Check > 0)
+            {
+                result = false;
+            }
+            else
+            {
+                int checkdele = Ql.AddDeviceOfProject(Idpr, Iddv, Notes);
+                if (checkdele > 0)
+                    result = true;
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
+        [HasCredential(RoleID = "RETURN_DEVICETODEPOT")]
         public ActionResult ReturnDeviceInDepartment(int Idpr, int Iddv, String notes)
         {
-            bool result = false;
-            int checkdele = Ql.ReturnDeviceOfProject(Idpr, Iddv, notes);
-            if (checkdele > 0)
-                result = true;
+            bool result = true;
+            var check = 0;
+            //Check xem có phải là thiết bị con nằm trong 
+            check += Ql.DeviceDevices.Where(x => x.DeviceCodeChildren == Iddv & x.IsDeleted == false & x.TypeComponant == 1).Count();
+            if (check > 0)
+            {
+                result = false;
+            }
+            else
+            {
+                int checkdele = Ql.ReturnDeviceOfProject(Idpr, Iddv, notes);
+                if (checkdele > 0)
+                    result = true;
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         //   [AuthorizationViewHandler]
-        public JsonResult AddDeviceDepartmentAll(string Id, int PJ,String Nt)
+        [HasCredential(RoleID = "ADD_DEVICEINPROJECT")]
+        public JsonResult AddDeviceDepartmentAll(string Id, int PJ, String Nt)
         {
-
-            var lstId = Id.Split(',');
-            for (int i = 0; i < lstId.Length; i++)
-            {
-                if (!lstId[i].Equals(""))
-                    Ql.AddDeviceOfProject(PJ, Convert.ToInt32(lstId[i]), Nt);
-            }
             bool result = true;
+            var IdParent = Id.Split(',');
+            var check = 0;
+            for (int i = 0; i < IdParent.Length; i++)
+            {
+                var IdP = Convert.ToInt32(IdParent[i]);
+                //Check thiết bị xem có phải là thiết bị con nằm trong
+                check += Ql.DeviceDevices.Where(x => x.DeviceCodeChildren == IdP & x.IsDeleted == false & x.TypeComponant == 1).Count();
+            }
+            if (check > 0)
+            {
+                result = false;
+            }
+            else
+            {
+                // Lấy danh sách thiết bị con từ danh sách thiết bị cha
+                for (int i = 0; i < IdParent.Length; i++)
+                {
+                    var IdP = Convert.ToInt32(IdParent[i]);
+                    var lstComponant = Ql.DeviceDevices.Where(x => x.DeviceCodeParents == IdP & x.IsDeleted == false & x.TypeComponant == 1).Select(x => x.DeviceCodeChildren).ToList();
+                    foreach (var item in lstComponant)
+                    {
+                        // Thêm thiết bị con vào DeviceOfProject
+                        Ql.AddDeviceOfProject(PJ, Convert.ToInt32(item), "");
+                    }
+                }
+                //Thêm thiết bị cha vào DeviceOfProject
+                var lstId = Id.Split(',');
+                for (int i = 0; i < lstId.Length; i++)
+                {
+                    if (!lstId[i].Equals(""))
+                        Ql.AddDeviceOfProject(PJ, Convert.ToInt32(lstId[i]), Nt);
+                }
+                result = true;
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         // [AuthorizationViewHandler]
+        [HasCredential(RoleID = "RETURN_DEVICETODEPOT")]
         public JsonResult ReturnDeviceDepartmentAll(string Id, int PJ, string notes)
         {
+            bool result = true;
             var lstId = Id.Split(',');
+            var check = 0;
             for (int i = 0; i < lstId.Length; i++)
             {
-                if (!lstId[i].Equals(""))
-                    Ql.ReturnDeviceOfProject(PJ, Convert.ToInt32(lstId[i]), notes);
+                var IdP = Convert.ToInt32(lstId[i]);
+                //Check thiết bị xem có phải là thiết bị con nằm trong
+                check += Ql.DeviceDevices.Where(x => x.DeviceCodeChildren == IdP & x.IsDeleted == false & x.TypeComponant == 1).Count();
             }
-            bool result = true;
+            if (check > 0)
+            {
+                result = false;
+            }
+            else
+            {
+                // Lấy danh sách thiết bị con từ danh sách thiết bị cha
+                for (int i = 0; i < lstId.Length; i++)
+                {
+                    var IdP = Convert.ToInt32(lstId[i]);
+                    var lstComponant = Ql.DeviceDevices.Where(x => x.DeviceCodeParents == IdP & x.IsDeleted == false & x.TypeComponant == 1).Select(x => x.DeviceCodeChildren).ToList();
+                    foreach (var item in lstComponant)
+                    {
+                        // Trả thiết bị con về kho                      
+                        Ql.ReturnDeviceOfProject(PJ, Convert.ToInt32(item), notes);
+                    }
+                }
+                // var lstId = Id.Split(',');
+                for (int i = 0; i < lstId.Length; i++)
+                {
+                    if (!lstId[i].Equals(""))
+                        Ql.ReturnDeviceOfProject(PJ, Convert.ToInt32(lstId[i]), notes);
+                }
+                result = true;
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         public ActionResult StatisticsDevicesInDepartment()
@@ -267,7 +348,6 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             text = lineBreakRegex.Replace(text, Environment.NewLine);
             //Strip formatting
             text = stripFormattingRegex.Replace(text, string.Empty);
-
             return text;
         }
 
@@ -291,14 +371,13 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             {
                 st = "Đang sửa";
             }
-
             return st;
         }
-
+        [HasCredential(RoleID = "EXPORT_DV_IN_DEPARTMENT")]
         public JsonResult ExportToExcel(int? IdProject)
         {
             Ql.Configuration.ProxyCreationEnabled = false;
-            var charts = Ql.DeviceOfProjectAll(IdProject).Select(i => new { i.DeviceCode, i.DeviceName, i.TypeName, i.Configuration, i.DateOfDelivery, i.StatusRepair,i.Notes }).ToList();
+            var charts = Ql.DeviceOfProjectAll(IdProject).Select(i => new { i.DeviceCode, i.DeviceName, i.TypeName, i.Configuration, i.DateOfDelivery, i.StatusRepair, i.Notes }).ToList();
             var model = charts.ToList();
             var a = "";
             List<NewConfig> numbers = new List<NewConfig>();
@@ -309,7 +388,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
                 var b = @String.Format("{0:dd-MM-yyyy}", model[i].DateOfDelivery);
                 //var NewConfig = model[i].Configuration.Replace(model[i].Configuration, a);
                 //new NewConfig { DeviceCode = model[i].DeviceCode, DeviceName = model[i].DeviceName, TypeName=  model[i].TypeName, Configuration = a, DateOfDelivery = model[i].DateOfDelivery, Notes = model[i].Notes };            
-                numbers.Add(new NewConfig { DeviceCode = model[i].DeviceCode, DeviceName = model[i].DeviceName, TypeName = model[i].TypeName, Configuration = a, DateOfDelivery =b, Notes = model[i].Notes, StatusRepair = status_rp });
+                numbers.Add(new NewConfig { DeviceCode = model[i].DeviceCode, DeviceName = model[i].DeviceName, TypeName = model[i].TypeName, Configuration = a, DateOfDelivery = b, Notes = model[i].Notes, StatusRepair = status_rp });
             }
             using (StringWriter sw = new StringWriter())
             {
@@ -337,55 +416,79 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        //   [AuthorizationViewHandler]
+        //[AuthorizationViewHandler]
+        [HasCredential(RoleID = "ADD_DEVICEINPROJECT")]
         public ActionResult AddDeviceInDepartmentMachine(int Id)
         {
             return View(Ql.ProjectDKCs.Find(Id));
         }
         [HttpGet]
+        [HasCredential(RoleID = "ADD_DEVICEINPROJECT")]
         public JsonResult GetDeviceInDepartmentMachine(string dvc)
         {
             Ql.Configuration.ProxyCreationEnabled = false;
-            bool Result = false;
-            if (Ql.SearchDevice(null, null, null, null, null).Where(x => x.DeviceCode.Trim() == dvc).Count() == 1)
+            int? Result = 0;
+            var stt = Ql.Devices.Where(x => x.DeviceCode.Trim() == dvc).Select(x => x.Status).First();
+            if (stt == 0)
             {
-                ViewBag.Scaner = Ql.SearchDevice(null, null, null, null, dvc).First();
-                Result = true;
+                var findDvCode = Ql.Devices.Where(x => x.DeviceCode.Trim() == dvc).Select(x => x.Id).First();
+                var check = Ql.DeviceDevices.Where(x => x.DeviceCodeChildren == findDvCode & x.IsDeleted == false).Count();
+                if (check > 0)
+                {
+                    Result = 4;
+                }
+                else
+                {
+                    ViewBag.Scaner = Ql.SearchDevice(null, null, null, null, dvc).First();
+                }
             }
-            else Result = false;
+            else
+            { Result = stt; }
             var model = ViewBag.Scaner;
             var result = new { Result, model };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //    [AuthorizationViewHandler]
+        [HasCredential(RoleID = "RETURN_DEVICETODEPOT")]
         public ActionResult ReturnDeviceInDepartmentMachine(int Id)
         {
             return View(Ql.ProjectDKCs.Find(Id));
         }
         [HttpGet]
+        [HasCredential(RoleID = "RETURN_DEVICETODEPOT")]
         public JsonResult GetReturnDeviceInDepartmentMachine(string dvc, int pjId)
         {
             Ql.Configuration.ProxyCreationEnabled = false;
-            bool Result = false;
+            int Result = 0;
             if (Ql.SearchDevice(null, null, null, pjId, null).Where(x => x.DeviceCode.Trim() == dvc).Count() == 1)
             {
-                ViewBag.Scaner = Ql.SearchDevice(null, null, null, pjId, dvc).First();
-                Result = true;
+                var findDvCode = Ql.Devices.Where(x => x.DeviceCode.Trim() == dvc).Select(x => x.Id).First();
+                var check = Ql.DeviceDevices.Where(x => x.DeviceCodeChildren == findDvCode & x.IsDeleted == false).Count();
+                if (check > 0)
+                {
+                    Result = 2;
+                }
+                else
+                {
+                    ViewBag.Scaner = Ql.SearchDevice(null, null, null, pjId, dvc).First();
+                    Result = 3;
+                }
             }
-            else Result = false;
+            else
+            {
+                Result = 1;
+            }
             var model = ViewBag.Scaner;
             var result = new { Result, model };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         //    [AuthorizationViewHandler]
+        [HasCredential(RoleID = "VIEW_STATISTICAL_DEPARTMENT")]
         public ActionResult StatisticDepartment()
         {
             ViewData["StatisticProject"] = Ql.StatisticProject().ToList();
             return View();
-
         }
-
     }
 }

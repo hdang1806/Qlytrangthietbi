@@ -115,7 +115,7 @@
                             @*<th class="hidden-phone">Ngày bắt đầu </th>
                             <th class="hidden-phone">Ngày kết thúc</th>*@
                             <th>Số lượng thiết bị </th>
-                            @*<th>Trạng thái</th>*@
+                            <th>Trạng thái</th>
                             <th class="center">Xem</th>
                             <th class="center">Xóa</th>
                         </tr>
@@ -132,7 +132,7 @@
                                 @*<td style="width:9%" class="center hidden-phone">@String.Format("{0:dd/MM/yyyy}", item.FromDate)</td>
                                 <td style="width:10%" class="center hidden-phone">@String.Format("{0:dd/MM/yyyy}", item.ToDate)</td>*@
                                 <td style="width:12%" class="center">@item.NumDevice</td>
-                                @*<td style="width:9%" class="center ">@Html.Raw(item.Status.GetEnumDescription(typeof(eStatus.ProjectStatus)))</td>*@
+                                <td style="width:9%" class="center ">@Html.Raw(item.Status.GetEnumDescription(typeof(eStatus.ProjectStatus)))</td>
                                 <td style="width:3%" class="center">
                                     @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("EditProject")))
                                     {*@
@@ -213,7 +213,7 @@
                         if (result) {
                             $("#loaderDiv").hide();
                             $("#myModaldelete1").modal("hide");
-                            window.location = '@Url.Action("Project", "Project")';
+                            window.location = '@Url.Action("Department", "Department")';
                         } else {
                             $("#loaderDiv").hide();
                             $("#myModaldelete1").modal("hide");

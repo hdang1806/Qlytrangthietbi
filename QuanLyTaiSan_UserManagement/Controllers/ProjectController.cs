@@ -13,16 +13,12 @@ using System.Text.RegularExpressions;
 
 namespace QuanLyTaiSan_UserManagement.Controllers
 {
-    // [Authorize]
-    // [AuthorizationHandler]
+
     [HasCredential(RoleID = "")]
     public class ProjectController : Controller
     {
         QuanLyTaiSanCtyEntities Ql = new QuanLyTaiSanCtyEntities();
 
-        //   public object BarCodeReadType { get; private set; }
-
-        //  [AuthorizationViewHandler]
         public ActionResult Project()
         {
             ViewBag.ProjectNb = Ql.SearchProject(null, null, 0,null).Count();
@@ -45,7 +41,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             ViewBag.ProjectNb = Ql.SearchProject(ManagerProject, Status,0, ProjectSymbol).Count();
             return View("Project", ViewProject);
         }
-        //  [AuthorizationViewHandler]
+
         public ActionResult AddProject()
         {
             ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted != true).ToList();
@@ -92,7 +88,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
                 return RedirectToAction("Project", "Project");
             }
         }
-        // [AuthorizationViewHandler]
+
         public ActionResult EditProject(int Id)
         {
             var lstType = Ql.DeviceTypes.ToList();
@@ -129,7 +125,6 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return RedirectToAction("EditProject", "Project");
         }
 
-        //  [AuthorizationViewHandler]
         public JsonResult DeleteProject(string Id)
         {
             bool checkIsset = true;
@@ -158,7 +153,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        //   [AuthorizationViewHandler]
+
         public JsonResult DeleteProject1(int Id)
         {
             bool result = false;
@@ -175,7 +170,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        //  [AuthorizationViewHandler]
+
         public ActionResult AddDeviceInProject(int Id, int DeviceType)
         {
             ViewData["DeviceType"] = Ql.DeviceTypes.ToList();
@@ -201,7 +196,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             ViewData["CountingDeviceType"] = map;
             return View(Ql.ProjectDKCs.Find(Id));
         }
-        //   [AuthorizationViewHandler]
+
         public ActionResult AddDeviceInProject1(int Idpr, int Iddv, String Notes)
         {
             bool result = false;
@@ -219,7 +214,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
                 result = true;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        //   [AuthorizationViewHandler]
+
         public JsonResult AddDeviceProjectAll(string Id, int PJ)
         {
 
@@ -232,7 +227,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             bool result = true;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        // [AuthorizationViewHandler]
+
         public JsonResult ReturnDeviceProjectAll(string Id, int PJ, string notes)
         {
             var lstId = Id.Split(',');
@@ -286,11 +281,9 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             if (status ==  1)
             {
                 st = "Đang sửa";
-            }
-    
+            }   
             return st;
         }
-
 
         public JsonResult ExportToExcel(int? IdProject)
         {
@@ -299,7 +292,6 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             var model = charts.ToList();
           
             var a = "";
-         //   var status = "";
             List<NewConfig> numbers = new List<NewConfig>();
             for (int i = 0; i < model.Count; ++i)
             {
@@ -337,7 +329,6 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        //   [AuthorizationViewHandler]
         public ActionResult AddDeviceInProjectMachine(int Id)
         {
             return View(Ql.ProjectDKCs.Find(Id));
@@ -358,7 +349,6 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //    [AuthorizationViewHandler]
         public ActionResult ReturnDeviceInProjectMachine(int Id)
         {
             return View(Ql.ProjectDKCs.Find(Id));
@@ -379,7 +369,6 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //    [AuthorizationViewHandler]
         public ActionResult StatisticProject()
         {
             ViewData["StatisticProject"] = Ql.StatisticProject().ToList();

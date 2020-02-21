@@ -29,5 +29,6 @@ namespace QuanLyTaiSan_UserManagement.Models
         public string TypeName { get; set; }
         public int Status { get; set; }
         public Nullable<double> Price { get; set; }
+        public string PriceOne { get; set; }
     }
 }

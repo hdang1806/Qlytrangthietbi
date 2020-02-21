@@ -662,7 +662,6 @@
       <Parameter Name="Status" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="SearchUser" ReturnType="Collection(QuanLyTaiSanCtyModel.SearchUser_Result)">
-      <Parameter Name="RoleId" Mode="In" Type="Int32" />
       <Parameter Name="status" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="sp_alterdiagram">
@@ -956,6 +955,10 @@
       <Parameter Name="IdDv" Mode="In" Type="Int32" />
       <Parameter Name="IdUser" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="DeleteTypeParentTypeChild">
+      <Parameter Name="TypeChidren" Mode="In" Type="Int32" />
+      <Parameter Name="TypeParent" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="DeviceById_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1110,6 +1113,8 @@
     <Property Type="String" Name="PriceOne" Nullable="true" />
     <Property Type="Int32" Name="ParentId" Nullable="true" />
     <Property Type="Int32" Name="Status" Nullable="true" />
+    <Property Type="String" Name="NameTypeComponant" Nullable="true" />
+    <Property Type="Boolean" Name="IsDeleted" Nullable="true" />
   </ComplexType>
   <ComplexType Name="SearchUser_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1120,7 +1125,6 @@
     <Property Type="String" Name="PhoneNumber" Nullable="false" />
     <Property Type="String" Name="Department" Nullable="true" />
     <Property Type="String" Name="Position" Nullable="true" />
-    <Property Type="String" Name="RoleName" Nullable="true" />
     <Property Type="String" Name="Address" Nullable="true" />
   </ComplexType>
   <ComplexType Name="SearchProject_Result">
@@ -1173,6 +1177,8 @@
     <Property Type="String" Name="DeviceTypeName" Nullable="true" />
     <Property Type="String" Name="Name" Nullable="false" />
     <Property Type="Int32" Name="Status" Nullable="false" />
+    <Property Type="String" Name="PriceOne" Nullable="true" />
+    <Property Type="String" Name="PriceRepair" Nullable="true" />
   </ComplexType>
   <ComplexType Name="RepairDetailsAll_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1245,6 +1251,7 @@
     <Property Type="String" Name="TypeName" Nullable="false" />
     <Property Type="Int32" Name="Status" Nullable="false" />
     <Property Type="Double" Name="Price" Nullable="true" />
+    <Property Type="String" Name="PriceOne" Nullable="true" />
   </ComplexType>
   <ComplexType Name="SearchRequestDeviceNew_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1421,7 +1428,7 @@
     <Property Type="String" Name="DeviceCode" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="DeviceName" Nullable="true" MaxLength="200" />
     <Property Type="String" Name="Configuration" Nullable="true" MaxLength="500" />
-    <Property Type="Double" Name="Price" Nullable="true" />
+    <Property Type="String" Name="Price" Nullable="true" />
     <Property Type="String" Name="PurchaseContract" Nullable="true" MaxLength="500" />
     <Property Type="DateTime" Name="DateOfPurchase" Nullable="true" />
     <Property Type="Boolean" Name="IsDeleted" Nullable="true" />

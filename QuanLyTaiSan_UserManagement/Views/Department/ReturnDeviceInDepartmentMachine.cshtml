@@ -85,13 +85,27 @@
                 dataType: 'json',
                 success: function (response) {
                     var data = response.model;
+                    var check = response.Result
                     if (data != null) {
                         {
                             $('#exampleMT tbody').append("<tr class=" + 'gradeA' + " id=" + 'row_' + data.Id + "><td><input type = " + 'checkbox' + " class=" + 'check' + " name =" + 'check' + " value=" + data.Id + " checked></td><td  class=" + 'DeviceId' + ">" + data.DeviceCode + "</td><td>" + data.DeviceName + "</td><td>" + data.TypeName + "</td><td>" + data.Configuration + "</td><td  class=" + 'center' + "><a onclick=" + 'ConfirmDelete(' + data.Id + ')' + "  href=" + 'javascript:void(0)' + "> <i class=" + 'icon-remove' + "></i> </a></td></tr>");
-                            $('#DeviceBarcode').val('')
+                            $('#DeviceBarcode').val('');
+                            $('#DeviceBarcode').focus();
                         }
                     }
-                    else { alert("Thiết bị không có trong phòng "); $('#DeviceBarcode').val('') }
+                    else if (check == 1 )
+                    {
+                        alert("Thiết bị không có trong phòng ");
+                        $('#DeviceBarcode').val('');
+                        $('#DeviceBarcode').focus();
+                    }
+                    else if (check == 2)
+
+                    {
+                        alert("Thiết bị là thiết bị con nằm trong thiết bị cha ");
+                        $('#DeviceBarcode').val('');
+                        $('#DeviceBarcode').focus();
+                    }
                 },
             });
     }

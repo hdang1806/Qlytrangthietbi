@@ -20,5 +20,6 @@ namespace QuanLyTaiSan_UserManagement.Models
         public int id { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> TypeComponant { get; set; }
+        public Array numbers { get; set; }
     }
 }

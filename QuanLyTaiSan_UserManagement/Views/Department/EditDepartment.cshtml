@@ -70,18 +70,18 @@
                         </select>
                     </div>
                 </div>
-                @*<div class="form-group m-bot15 clearfix">
+                <div class="form-group m-bot15 clearfix">
                     <div class="col-md-4">
                         <label>Trạng thái</label>
                     </div>
                     <div class="col-md-8">
                         <select class="input-large form-control myctr" name="Status">
                             <option value="1" @(Model.Status == 1 ? "selected" : "")>Đang hoạt động</option>
-                            <option value="2" @(Model.Status == 2 ? "selected" : "")>Tạm dừng</option>
-                            <option value="3" @(Model.Status == 3 ? "selected" : "")>Kết thúc</option>
+                            <option value="2" @(Model.Status == 2 ? "selected" : "")>Dừng hoạt động</option>
+                        
                         </select>
                     </div>
-                </div>*@
+                </div>
             </div>
             <div class="col-md-6">
                 @*<div class="form-group m-bot15 clearfix">
@@ -137,7 +137,7 @@
                         </div>
                         @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Project") && k.ActionName.Equals("AddDeviceInProject1") || k.ActionName.Equals("AddDeviceProjectAll")))
                             {*@
-                        <a id="btnAddeviceofProject" class="btn btn-success" href="@Url.Action("AddDeviceInDepartment", "Department", new { id = Model.Id, DeviceType = 0 })">Thêm thiết bị <i class="icon-plus"></i></a>
+                        <a id="btnAddeviceofProject"  class="btn btn-success" href="@Url.Action("AddDeviceInDepartment", "Department", new { id = Model.Id, DeviceType = 0 })">Thêm thiết bị <i class="icon-plus"></i></a>
 
                         @*}*@
 
@@ -285,6 +285,18 @@
 <!--Start Scrip-->
 <script>
     $(document).ready(function () {
+        var check = @Model.Status;
+        if(check == 2)
+        {
+        $("#btnAddeviceofProject").attr('disabled', 'disabled') ;
+        $("#btnAddeviceofProjectMachine").attr('disabled', 'disabled') ;
+        }
+        else
+        {
+            $("#btnAddeviceofProject").removeAttr('disabled');
+            $("#btnAddeviceofProjectMachine").removeAttr('disabled');
+        }
+
         var table = $('#exampleMT').dataTable({
             "oLanguage": {
                 "sInfo": "Hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",

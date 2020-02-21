@@ -8,13 +8,10 @@ using QuanLyTaiSan_UserManagement.Attribute;
 
 namespace QuanLyTaiSan_UserManagement.Controllers
 {
- //   [Authorize]
-  //  [AuthorizationHandler]
     public class RepairTypeController : Controller
     {
-        // GET: RepairType
         QuanLyTaiSanCtyEntities Ql = new QuanLyTaiSanCtyEntities();
-     //   [AuthorizationViewHandler]
+
         public ActionResult RepairType()
         {
             ViewData["RepairTypes"] = Ql.RepairTypes.ToList();
@@ -31,7 +28,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
                 data = RepairTypes,
             }, JsonRequestBehavior.AllowGet);
         }
-     //   [AuthorizationViewHandler]
+
         public ActionResult AddRepairType()
         {
             return View();
@@ -44,7 +41,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             Ql.AddRepairType(TypeName, Notes);
             return RedirectToAction("RepairType", "RepairType");
         }
-    //    [AuthorizationViewHandler]
+
         public ActionResult EditRepairType(int Id)
         {
             return View(Ql.RepairTypes.Find(Id));
@@ -58,7 +55,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
                 result = true;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-    //    [AuthorizationViewHandler]
+
         public ActionResult DeleteRepairType(int Id)
         {
             bool result = false;
@@ -66,7 +63,6 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             if (dv.Count() > 0)
             {
                 result = false;
-
             }
             else
             {
@@ -76,7 +72,6 @@ namespace QuanLyTaiSan_UserManagement.Controllers
                     result = true;
             }
                 return Json(result, JsonRequestBehavior.AllowGet);
-            
         }
     
     }

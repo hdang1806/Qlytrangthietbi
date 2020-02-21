@@ -1,4 +1,6 @@
 ﻿@using QuanLyTaiSan_UserManagement.Models;
+
+@*Xác nhận xóa từng thiết bị (Trên màn thanh lý,...)*@ 
 <div class="modal fade" id="myModaldelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -8,9 +10,6 @@
             </div>
             <div class="modal-body">
                 Bạn có muốn xóa thiết bị đã chọn?
-                @*<div style="text-align:center;display:none" id="loaderDiv">
-                        <img src="~/Content/img/Spinner-1s-200px.gif" width="150" />
-                    </div>*@
             </div>
             <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="button">Hủy</button>
@@ -19,6 +18,8 @@
         </div>
     </div>
 </div>
+
+@*Xác nhận thêm thiết bị vào phòng ban (Màn chi tiết TB)*@
 <div class="modal fade" id="myModalg1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -112,8 +113,6 @@
         //});
         / we join the array separated by the comma /
       
-
-
         if (chkArray.length > 0) {
             if (status != 0) {
                 alert("Có những thiết bị đã có sẵn trong dự án hoặc không thể gán!");
@@ -122,7 +121,6 @@
                 $("#hiddenId1").val(chkArray);
                 $("#myModalg1").modal('show');
                 $('#btnContinueAdd').click(function () {
-                    //  $("#loaderDiv").show();
                     $(".checkon:checked").each(function () {
                         var check = $(this).val();
                         $("#hiddenprid").val(check);
@@ -138,11 +136,9 @@
                         },
                         success: function (result) {
                             if (result) {
-                                //   $("#loaderDiv").hide();
                                 $("#myModalg1").modal("hide");
                                 location.reload();
-                            } else {
-                                // $("#loaderDiv").hide();
+                            } else {                   
                                 $("#myModalg1").modal("hide");
                                 alert("Thêm thiết bị lỗi. Có thiết bị con nằm trong thiết bị cha");
                             }

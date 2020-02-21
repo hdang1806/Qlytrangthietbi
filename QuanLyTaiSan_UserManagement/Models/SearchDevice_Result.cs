@@ -32,5 +32,7 @@ namespace QuanLyTaiSan_UserManagement.Models
         public string PriceOne { get; set; }
         public Nullable<int> ParentId { get; set; }
         public Nullable<int> Status { get; set; }
+        public string NameTypeComponant { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     }
 }

@@ -46,34 +46,16 @@
                                     @Model.DeviceName &nbsp @Model.ProjectName  &nbsp
                                     @Html.Raw(Convert.ToInt32(Model.StatusRepair).GetEnumDescription(typeof(eStatus.RepairStatus)))
                                     <div class="pull-right">
-                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("EditDevice1")))
-                                            {*@
-                                        <button type="submit" class="btn btn-success" id="Save" style="display:none"> Lưu </button>@*}*@
-                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("EditDevice1")))
-                                            {*@
+                                        <button type="submit" class="btn btn-success" id="Save" style="display:none"> Lưu </button>
                                         <button class="btn btn-primary" id="Edit" style="display:none" type="button"> Sửa </button>
-                                        @*}*@
                                         <button class="btn btn-primary" id="Cancel" style="display:none" type="reset"> Hủy </button>
-                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("DeleteDevice")))
-                                            {*@
                                         <button type="button" class="btn btn-warning" id="deletedevice" style="display:none" onclick="ConfirmDelete()">Xóa</button>
-                                        @*}*@
                                         <button type="button" class="btn btn-success" ID="btnGenerate" onclick="GenBarCode()">Tạo Mã Vạch</button>
-                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("AddDeviceProject")))
-                                            {*@
-                                        <button type="button" class="btn btn-success delete" id="addproject" onclick="DeviceProject(@Model.Id)" style="display:none">Xuất cho Phòng ban</button>@*}*@
-                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("ReturnDeviceInProject")))
-                                            {*@
+                                        <button type="button" class="btn btn-success delete" id="addproject" onclick="DeviceProject(@Model.Id)" style="display:none">Xuất cho Phòng ban</button>
                                         <button type="button" class="btn btn-success" id="prjreturn" style="display:none" onclick="ConfirmReturn(@Model.Id)">Trả Về Kho</button>
-                                        @*}*@
-                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("LiquidationDevice")))
-                                            {*@
                                         <button type="button" class="btn btn-success delete" style="display:none" id="liquidationdevice" onclick="Confim1()">Thanh Lý</button>
-                                        @*}*@
-                                        @*@if (Session["AuthenticationFeature"] != null && (Session["AuthenticationFeature"] as List<SystemFeature>).Any(k => k.ControllerName.Equals("Device") && k.ActionName.Equals("AddRepairDevice")))
-                                            {*@
                                         <button type="button" class="btn btn-success delete" style="display:none" id="repairdevice" onclick="Repair(@Model.Id)">Sửa chữa Thiết Bị</button>
-                                        @*}*@
+
                                     </div>
                                 </header>
                                 <div class="panel-body1" id="detaildevice">
@@ -202,7 +184,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="form-group m-bot15 clearfix">
+                                        <div class="form-group m-bot15 clearfix" style="display:none">
                                             <label class="control-label col-md-4">Ngày thêm vào</label>
                                             <div class="col-md-8 input-group">
                                                 <input class="form-control form-control-inline input-medium default-date-picker myctr" type="text" size="16" value="@String.Format("{0:yyyy-MM-dd}",Model.CreatedDate)" name="CreatedDate" id="CreatedDate" />
@@ -211,7 +193,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="form-group m-bot15 clearfix">
+                                        <div class="form-group m-bot15 clearfix" style="display:none">
                                             <label class="control-label col-md-4">Ngày sửa đổi</label>
                                             <div class="col-md-8 input-group">
                                                 <input class="form-control form-control-inline input-medium default-date-picker myctr" type="text" size="16" value="@String.Format("{0:yyyy-MM-dd}",Model.ModifiedDate)" />
@@ -242,9 +224,9 @@
                                         <section class="panel panel-down">
                                             <header class="panel-heading">
                                                 Lịch sử sử dụng
-                                                <span class="tools pull-right">
-                                                    <a href="javascript:;" class="icon-chevron-down"></a>
-                                                </span>
+                                                @*<span class="tools pull-right">
+                                                        <a href="javascript:;" class="icon-chevron-down"></a>
+                                                    </span>*@
                                             </header>
                                             <div class="panel-body">
                                                 <table class="table table-bordered table-hover table-striped" style="margin-bottom:0px">
@@ -253,7 +235,6 @@
                                                             <th>Ngày Thêm</th>
                                                             <th>Ngày Trả</th>
                                                             <th>Phòng ban</th>
-                                                            <th>Nội dung sử dụng</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -267,7 +248,6 @@
                                                                     @String.Format("{0:dd/MM/yyyy}", item.DateOfReturn)
                                                                 </td>
                                                                 <td>@item.ProjectName</td>
-                                                                <td>@item.Notes</td>
                                                             </tr>
                                                         }
                                                     </tbody>
@@ -279,17 +259,17 @@
                                         <section class="panel panel-down">
                                             <header class="panel-heading">
                                                 Lịch sử sửa chữa
-                                                <span class="tools pull-right">
-                                                    <a href="javascript:;" class="icon-chevron-down"></a>
-                                                </span>
+                                                @*<span class="tools pull-right">
+                                                        <a href="javascript:;" class="icon-chevron-down"></a>
+                                                    </span>*@
                                             </header>
                                             <div class="panel-body">
                                                 <table class="table table-bordered table-hover table-striped" style="margin-bottom:0px">
                                                     <thead>
                                                         <tr>
-                                                            <th>Ngày</th>
+                                                            <th>Ngày sửa</th>
                                                             <th>Kiểu sửa chữa</th>
-                                                            <th>Giá</th>
+                                                            <th>Chi phí</th>
                                                             <th>Ghi chú</th>
                                                         </tr>
                                                     </thead>
@@ -301,7 +281,7 @@
                                                                     @String.Format("{0:dd/MM/yyyy}", item.DateOfRepair)
                                                                 </td>
                                                                 <td>@item.TypeName</td>
-                                                                <td>@item.Price</td>
+                                                                <td>@item.PriceOne</td>
                                                                 <td>@Html.Raw(item.Notes)</td>
                                                             </tr>
                                                         }
@@ -709,15 +689,10 @@
                 </div>
             </div>
         </section>
-
-
-
     </div>
 </div>
-
-
+<script src="~/Common/ScriptCommon.js"></script>
 <script>
-
     $(document).ready(function () {
         CKEDITOR.replace('PurchaseContract')
         CKEDITOR.replace('Configuration');
@@ -776,11 +751,6 @@
         $('#detaildevice').find('input, button, select').removeAttr('disabled');
         $("#ParentId option").attr('disabled', 'disabled');
         EnableEditor2();
-
-
-
-
-
     });
     $("#Cancel").click(function () {
         $("#Cancel").hide();
@@ -1272,33 +1242,6 @@
         else {
             $("#edituser").hide()
         }
-    }
-
-    //dinh dang so
-    function FormatNumber(obj) {
-
-        var strvalue;
-        if (eval(obj))
-            strvalue = eval(obj).value;
-        else
-            strvalue = obj;
-        eval(obj).value = FormatNumberValue(strvalue);
-    }
-    // DInh dang so
-    function FormatNumberValue(strvalue) {
-        var num;
-
-        num = strvalue.toString().replace(/\$|\,/g, '');
-        if (isNaN(num))
-            num = "";
-        sign = (num == (num = Math.abs(num)));
-        num = Math.floor(num * 100 + 0.50000000001);
-        num = Math.floor(num / 100).toString();
-        for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3) ; i++)
-            num = num.substring(0, num.length - (4 * i + 3)) + ',' +
-            num.substring(num.length - (4 * i + 3));
-        return (((sign) ? '' : '-') + num);
-
     }
 
 

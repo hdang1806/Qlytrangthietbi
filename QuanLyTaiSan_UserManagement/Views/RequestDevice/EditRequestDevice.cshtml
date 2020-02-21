@@ -92,8 +92,8 @@
                                     <input  class="form-control input-large myctr " type="text" value="@Model.NameUserApproved"/>                                 
                                 </div>
                             </div>
-                            <input value="@Html.Raw(System.Web.HttpContext.Current.User.Identity.Name)" type="hidden" id="NameUserApproved" name="NameUserApproved" /> 
-                            <input type="hidden" name="CreatedDate" value=@Model.CreatedDate />
+                            @*<input value="@Html.Raw(System.Web.HttpContext.Current.User.Identity.Name)" type="hidden" id="NameUserApproved" name="NameUserApproved" /> 
+                            <input type="hidden" name="CreatedDate" value=@Model.CreatedDate />*@
                             <div class="form-group row">
                                 <label class="col-md-4"> Cấu hình </label>
                                 <div class="col-md-8 ">
@@ -130,12 +130,11 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group row">
+                            <div class="form-group row" style="display:none">
                                 <label class="col-md-4 ">Trạng thái phê duyệt</label>
                                 <div class="col-md-8">
-                                    <select class="input-large form-control myctr" name="Approved" id="Approved" onchange="StatusApproved()">
-                                        <option value="false" @(Model.Approved == false ? "selected" : "")>Chưa phê duyệt</option>
-                                        <option value="true" @(Model.Approved == true ? "selected" : "")>Đã phê duyệt</option>
+                                    <select class="input-large form-control myctr" name="Approved" id="Approved" @*onchange="StatusApproved()"*@>
+                                        <option value="false" selected>Trạng thái yêu cầu</option>
                                     </select>
                                 </div>
                             </div>
@@ -164,7 +163,7 @@
 
             </div>
         </div>
-        <input type="hidden" id="StatusApproved" value="@Model.Approved" />
+        @*<input type="hidden" id="StatusApproved" value="@Model.Approved" />*@
     <!--The end edit-->
         // POPUP
         <!--Popup Appro -->
@@ -306,11 +305,13 @@
         $("#myModal3").modal('show');
     }
     var CancelApproved = function () { }
+
+    // Phê duyệt yêu cầu
     var ApprovedOk = function () {
         //var a = $('#UserApproved').val();
         //if (a != "") {
             $('#InfoRequest').find('input, button, select, textarea').removeAttr('disabled', 'disabled');
-            $("#Approved option[value=true]").prop("selected", "selected");
+            $("#Approved option[value=false]").prop("selected", "selected");
             $("#Status option[value=1]").prop("selected", "selected")
             $("#formIdRequestDv").submit();
         //}
@@ -318,6 +319,7 @@
         //    $("#TestNullPS").show();
         //}
     }
+    // Từ chối yêu cầu
     var Approvedfail = function () {
         var ctgr = $("#NoteReasonRefuse");
         //var UserApproved = $("#UserUnApproved");

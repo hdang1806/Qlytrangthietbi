@@ -13,12 +13,11 @@ namespace QuanLyTaiSan_UserManagement
         {
             MD5 md5 = new MD5CryptoServiceProvider();
 
-            //compute hash from the bytes of text
+            //Chuyển kiểu chuổi thành kiểu byte
             md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
-
-            //get hash result after compute it
+            //mã hóa chuỗi đã chuyển
             byte[] result = md5.Hash;
-
+            //tạo đối tượng StringBuilder (làm việc với kiểu dữ liệu lớn)
             StringBuilder strBuilder = new StringBuilder();
             for (int i = 0; i < result.Length; i++)
             {
@@ -26,7 +25,6 @@ namespace QuanLyTaiSan_UserManagement
                 //for each byte
                 strBuilder.Append(result[i].ToString("x2"));
             }
-
             return strBuilder.ToString();
         }
     }

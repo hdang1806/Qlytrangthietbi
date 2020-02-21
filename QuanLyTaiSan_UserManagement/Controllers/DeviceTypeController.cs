@@ -7,12 +7,11 @@ using QuanLyTaiSan_UserManagement.Attribute;
 using QuanLyTaiSan_UserManagement.Models;
 namespace QuanLyTaiSan_UserManagement.Controllers
 {
-  //  [Authorize]
-    //[AuthorizationHandler]
+
     public class DeviceTypeController : Controller
     {
         QuanLyTaiSanCtyEntities data = new QuanLyTaiSanCtyEntities();
-      //  [AuthorizationViewHandler]
+
         public ActionResult DeviceType()
         {
             return View(data.DeviceTypes.ToList());
