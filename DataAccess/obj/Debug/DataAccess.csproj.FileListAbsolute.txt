@@ -38,6 +38,8 @@ D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\EntityFramework.dll
 D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\EntityFramework.SqlServer.dll
 D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\EntityFramework.xml
 D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
-D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\obj\Debug\DataAccess.csprojAssemblyReference.cache
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
+D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
 D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\obj\Debug\DataAccess.dll
 D:\Clone_GitHub\DATN_QLTSCongTy\DataAccess\obj\Debug\DataAccess.pdb

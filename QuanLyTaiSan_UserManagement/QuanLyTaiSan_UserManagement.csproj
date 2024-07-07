@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuanLyTaiSan_UserManagement</RootNamespace>
     <AssemblyName>QuanLyTaiSan_UserManagement</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -26,6 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,6 +81,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -87,11 +89,8 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -133,6 +132,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -416,6 +416,7 @@
     <Compile Include="Models\UserLogin.cs">
       <DependentUpon>QuanLyTaiSanCty.tt</DependentUpon>
     </Compile>
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -844,7 +845,6 @@
     <Content Include="Models\QuanLyTaiSanCty.edmx.diagram">
       <DependentUpon>QuanLyTaiSanCty.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\assets\font\IDAutomationHC39M.ttf" />
     <Content Include="App_Data\IDAutomationHC39M.ttf" />
     <Content Include="Content\assets\advanced-datatable\media\images\Sorting icons.psd" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
@@ -953,7 +953,6 @@
     <Content Include="Views\DeviceType\DetailType.cshtml" />
     <Content Include="Views\DeviceType\CreateDeviceType.cshtml" />
     <Content Include="Views\Role\RoleIndex.cshtml" />
-    <Content Include="Views\DeviceType\DeviceTypestatistical.cshtml" />
     <Content Include="Views\DeviceType\StatisticalDeviceType.cshtml" />
     <Content Include="Views\Device\StatisticalDevice.cshtml" />
     <Content Include="Views\Project\AddDeviceInProjectMachine.cshtml" />
@@ -981,6 +980,7 @@
     <Content Include="Views\Device\ManagerTypeParent.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\assets\font\" />
     <Folder Include="Content\img\fonts\" />
   </ItemGroup>
   <ItemGroup>

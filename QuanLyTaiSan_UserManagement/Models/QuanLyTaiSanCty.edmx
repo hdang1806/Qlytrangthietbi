@@ -643,10 +643,6 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Parameter Name="NumDevice" Type="int" Mode="In" />
           <Parameter Name="UserApproved" Type="int" Mode="In" />
         </Function>
-        <Function Name="AddRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="RoleName" Type="nvarchar" Mode="In" />
-          <Parameter Name="Notes" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="AddScheduleTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DeviceId" Type="int" Mode="In" />
           <Parameter Name="DateOfTest" Type="date" Mode="In" />
@@ -931,11 +927,6 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Parameter Name="NoteProcess" Type="nvarchar" Mode="In" />
           <Parameter Name="NoteReasonRefuse" Type="nvarchar" Mode="In" />
           <Parameter Name="NameUserApproved" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="UpdateRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Id" Type="int" Mode="In" />
-          <Parameter Name="RoleName" Type="nvarchar" Mode="In" />
-          <Parameter Name="Notes" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="UpdateScheduleTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
@@ -2258,6 +2249,7 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <Property Type="String" Name="Department" Nullable="true" />
           <Property Type="String" Name="Position" Nullable="true" />
           <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="ProjectName" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SearchProject_Result" >
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2907,7 +2899,6 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <FunctionImportMapping FunctionImportName="AddRepairDetails" FunctionName="QuanLyTaiSanCtyModel.Store.AddRepairDetails" />
           <FunctionImportMapping FunctionImportName="AddRepairType" FunctionName="QuanLyTaiSanCtyModel.Store.AddRepairType" />
           <FunctionImportMapping FunctionImportName="AddRequestDevice" FunctionName="QuanLyTaiSanCtyModel.Store.AddRequestDevice" />
-          <FunctionImportMapping FunctionImportName="AddRole" FunctionName="QuanLyTaiSanCtyModel.Store.AddRole" />
           <FunctionImportMapping FunctionImportName="AddScheduleTest" FunctionName="QuanLyTaiSanCtyModel.Store.AddScheduleTest" />
           <FunctionImportMapping FunctionImportName="AddSupplier" FunctionName="QuanLyTaiSanCtyModel.Store.AddSupplier" />
           <FunctionImportMapping FunctionImportName="AddUser" FunctionName="QuanLyTaiSanCtyModel.Store.AddUser" />
@@ -3075,7 +3066,6 @@ warning 6002: The table/view 'QuanLyTaiSanCtyDATN.dbo.DeviceTypeComponantType' d
           <FunctionImportMapping FunctionImportName="UpdateDeviceType" FunctionName="QuanLyTaiSanCtyModel.Store.UpdateDeviceType" />
           <FunctionImportMapping FunctionImportName="UpdateProject" FunctionName="QuanLyTaiSanCtyModel.Store.UpdateProject" />
           <FunctionImportMapping FunctionImportName="UpdateRequestDevice" FunctionName="QuanLyTaiSanCtyModel.Store.UpdateRequestDevice" />
-          <FunctionImportMapping FunctionImportName="UpdateRole" FunctionName="QuanLyTaiSanCtyModel.Store.UpdateRole" />
           <FunctionImportMapping FunctionImportName="UpdateScheduleTest" FunctionName="QuanLyTaiSanCtyModel.Store.UpdateScheduleTest" />
           <FunctionImportMapping FunctionImportName="UpdateSupplier" FunctionName="QuanLyTaiSanCtyModel.Store.UpdateSupplier" />
           <FunctionImportMapping FunctionImportName="UpdateUser" FunctionName="QuanLyTaiSanCtyModel.Store.UpdateUser" />

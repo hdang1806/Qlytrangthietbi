@@ -51,7 +51,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
 
         public ActionResult AddRepairDetails()
         {
-            ViewData["Devices"] = Ql.SearchDevice(null,null,null,null,null).Where(x=>x.Status !=2 && x.StatusRepair !=1).ToList();
+            ViewData["Devices"] = Ql.SearchDevice(null, null, null, null, null).Where(x => x.Status != 2 && x.StatusRepair != 1).ToList();
             ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted == false).ToList();
             ViewData["RepairTypes"] = Ql.RepairTypes.ToList();
             return View();
@@ -67,7 +67,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             int? TypeOfRepair = colection["TypeOfRepair"].Equals("0") ? (int?)null : Convert.ToInt32(colection["TypeOfRepair"]);
             int? UserId = colection["UserId"].Equals("") ? (int?)null : Convert.ToInt32(colection["UserId"]);
             string Notes = colection["Notes"];
-            DateTime? NextDateOfRepair = colection["NextDateOfRepair"].Equals("") ? (DateTime?)null : Convert.ToDateTime(colection["NextDateOfRepair"]);       
+            DateTime? NextDateOfRepair = colection["NextDateOfRepair"].Equals("") ? (DateTime?)null : Convert.ToDateTime(colection["NextDateOfRepair"]);
             Ql.AddRepairDetails(DeviceId, DateOfRepair, NextDateOfRepair, TimeOrder, TypeOfRepair, AddressOfRepair, UserId, Notes);
             return RedirectToAction("RepairDetails", "RepairDetails");
         }
@@ -76,11 +76,11 @@ namespace QuanLyTaiSan_UserManagement.Controllers
         public ActionResult EditRepairDetails(int Id)
         {
             var his = Ql.RepairDetails.Find(Id).DeviceId;
-        
+
             ViewData["RepairHistory"] = Ql.HistoryRepairDetails(his).Where(x => x.Status == 1).ToList();
             ViewData["User"] = Ql.Users.Where(x => x.Status != 1 && x.IsDeleted != true).ToList();
             ViewData["RepairTypes"] = Ql.RepairTypes.ToList();
-           var repair = Ql.RepairDetailsById(Id).Single();
+            var repair = Ql.RepairDetailsById(Id).Single();
             return View(repair);
         }
         [HttpPost]
@@ -98,7 +98,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             DateTime? NextDateOfRepair = colection["NextDateOfRepair"].Equals("") ? (DateTime?)null : Convert.ToDateTime(colection["NextDateOfRepair"]);
             int? Status = colection["Status"].Equals("") ? (int?)null : Convert.ToInt32(colection["Status"]);
             double Price = colection["Prices"].Equals("") ? 0 : Convert.ToDouble(colection["Prices"]);
-            Ql.EditRepairDetails(Id, DeviceId, DateOfRepair, NextDateOfRepair, TimeOrder, TypeOfRepair, AddressOfRepair, UserId, NoteRepair, Status,Price);
+            Ql.EditRepairDetails(Id, DeviceId, DateOfRepair, NextDateOfRepair, TimeOrder, TypeOfRepair, AddressOfRepair, UserId, NoteRepair, Status, Price);
             return RedirectToAction("EditRepairDetails", "RepairDetails");
         }
 

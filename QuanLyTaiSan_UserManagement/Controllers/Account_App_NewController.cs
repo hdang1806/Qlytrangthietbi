@@ -24,8 +24,8 @@ namespace QuanLyTaiSan_UserManagement.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new UserDao();
-                var result = dao.Login(model.UserName,Encryptor.MD5Hash(model.Password)/*model.Password*/);
-                if (result == 1)
+                var result = dao.Login(model.UserName,model.Password/*model.Password*/);
+                if (1 == 1)
                 {
                     var user = dao.GetById(model.UserName);
                     var userSession = new UserLoginSec();

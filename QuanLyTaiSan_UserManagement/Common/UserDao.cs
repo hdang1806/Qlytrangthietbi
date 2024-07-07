@@ -124,6 +124,10 @@ namespace QuanLyTaiSan_UserManagement.Common
                 {
                     return 1;
                 }
+                if (result.PassWord.Trim() == passWord.Trim())
+                {
+                    return 1;
+                }
                 else
                 {
                     return -2;

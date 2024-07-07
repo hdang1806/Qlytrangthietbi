@@ -30,6 +30,7 @@ namespace QuanLyTaiSan_UserManagement.Controllers
 
         public ActionResult CreateUser()
         {
+            ViewData["Department"] = data.ProjectDKCs. Where(x => x.Status != 2 && x.IsDeleted == false).ToList();
             return View();
         }
         [HttpPost]
@@ -49,7 +50,11 @@ namespace QuanLyTaiSan_UserManagement.Controllers
 
         public ActionResult DetailUser(int Id)
         {
-        
+            ViewData["Department"] = data.ProjectDKCs.Where(x => x.Status != 2 && x.IsDeleted == false).ToList();
+            var ID = data.Users.Where(x => x.Id == Id).Select(x => x.Department).FirstOrDefault();
+            int ID1 = Convert.ToInt32(ID);
+            ViewBag.ID = ID1;
+           
             return View(data.Users.Find(Id));
         }
         [HttpPost]
